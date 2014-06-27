@@ -22,7 +22,9 @@ class MainHandler(webapp2.RequestHandler):
 
 class TestHandler(webapp2.RequestHandler):
 	def get(self):
-		markdown_sample = '''
+		template = jinja_environment.get_template('test.html')
+		self.response.out.write(template.render({
+			'markdown_sample': '''
 h1 header
 ============
 
@@ -34,12 +36,22 @@ Paragraphs are separated by a blank line.
   * that one
   * the other one
 '''
-		template = jinja_environment.get_template('test.html')
+		}))
+
+class TwitterTestHandler(webapp2.RequestHandler):
+	def get(self):
+		template = jinja_environment.get_template('twitter_test.html')
 		self.response.out.write(template.render({
-			'markdown_sample': markdown_sample
+			'id_list': [
+				'480238014119956480',
+				'480238687272202240',
+				'480239039262363648',
+				'480239438878892032'
+			]
 		}))
 
 app = webapp2.WSGIApplication([
 	('/', MainHandler),
-	('/test', TestHandler)
+	('/test', TestHandler),
+	('/test/twitter', TwitterTestHandler)
 ], debug=True)
