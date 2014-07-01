@@ -1,39 +1,83 @@
 <!DOCTYPE html>
 <html lang="ja">
 <head>
-	<meta charset="UTF-8">
-	<meta property="og:title" content="ニモニク - 株式会社ニーモニック">
-	<meta property="og:image" content="http://www.mnemonic.co.jp/ogimage.png">
-	<meta property="og:description" content="株式会社ニーモニックは2014年2月14日、スタートしました。">
+	<meta charset="UTF-8" />
+	<meta property="og:title" content="ニモニク - 株式会社ニーモニック" />
+	<meta property="og:image" content="http://www.mnemonic.co.jp/ogimage.png" />
+	<meta property="og:description" content="株式会社ニーモニックのオフィシャルサイトです。" />
 	<title>ニモニク - 株式会社ニーモニック</title>
+	<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Montserrat+Alternates" />
 	<style>
-		body {
-			background: #fff;
-			margin: 0;
-			padding: 0;
-		}
-		h1 {
-			position: absolute;
-			top: 50%;
-			left: 50%;
-			text-align: center;
-			margin-top: -180px;
-			margin-left: -72px;
-		}
-		.message {
-			position: absolute;
-			top: 50%;
-			left: 0;
-			text-align: center;
-			width: 100%;
-		}
+		body { background-color: #fff; margin: 0; padding: 0; }
+		a img { border: none; }
+		#subnav { background-color: #ee7f3c; width: 100%; }
+		#subnav .subnav-inner { position: relative; margin: 0 auto; width: 1100px; height: 44px; z-index: 10; }
+		#subnav .subnav-inner .logo { position: absolute; left: 0; top: 22px; }
+		#subnav .subnav-inner ul { position: absolute; right: 0; top: 10px; margin: 0; padding: 0; }
+		#subnav .subnav-inner ul li { float: left; list-style: none; margin: 0 0 0 20px; padding: 0; }
+		#container { position: relative; background: #fff url("/bg_main.jpg") top center no-repeat; height: auto !important; z-index: 0; }
+		#header { margin: 0 auto; width: 1100px; height: 138px; }
+		#header h1 { background: transparent url("/logotype.png") 0 78px no-repeat; margin: 0 0 0 200px; padding: 0; width: 295px; height: 103px; }
+		#header h1 span { display: none; }
+		#main { margin: 0 auto; width: 1100px; }
+		#main .nav { float: left; width: 160px; }
+		#main .nav ul { text-align: right; margin: 0; padding: 60px 0 0 0; }
+		#main .nav ul li { font-size: 20px; font-family: 'Montserrat Alternates', sans-serif; list-style: none; margin: 0 0 20px 0; padding: 0; }
+		#main .nav ul li a { color: #999; text-decoration: none; }
+		#main .nav ul li a:hover { color: #ee7f3c; }
+		#main .body { float: right; padding-top: 60px; width: 860px; }
+		#main .body p { color: #333; font-size: 16px; line-height: 1.8; text-shadow: 0 1px 2px #fff; font-weight: bold; margin: 0 0 .6em 0; }
+		#footer { position: absolute; left: 0; bottom: 0; width: 100%; }
+		#footer p.copyright { color: #999; font-size: 10px; margin: 30px auto; width: 1100px; }
 	</style>
 </head>
 <body>
-	<h1><img src="logo.png" alt="ニモニク"></h1>
-	<div class="message">
-		<p>株式会社ニーモニックは2014年2月14日、スタートしました。<br>ウェブサイトは鋭意作成中ですので、しばらくお待ちください。</p>
-		<p>&raquo; <a href="https://www.facebook.com/mnemoniccojp">Facebookページ</a></p>
+	<nav id="subnav">
+		<div class="subnav-inner">
+			<div class="logo"><a href="/"><img src="/logo.png" alt="ニモニク" /></a></div>
+			<ul>
+				<li><a href="https://twitter.com/mnemoniccojp"><img src="/socialicon_twitter.png" alt="Twitter" /></a></li>
+				<li><a href="https://www.facebook.com/mnemoniccojp"><img src="/socialicon_facebook.png" alt="Facebook" /></a></li>
+				<li><a href="https://plus.google.com/106166004987694195799"><img src="/socialicon_googleplus.png" alt="Google+" /></a></li>
+			</ul>
+		</div>
+	</nav>
+	<div id="container">
+		<header id="header">
+			<h1><span>株式会社ニーモニック</span></h1>
+		</header>
+		<div id="main">
+			<nav class="nav" role="navigation">
+				<ul>
+					<li class="about"><a href="#">About</a></li>
+					<li class="blog"><a href="#">Blog</a></li>
+					<li class="contact"><a href="#">Contact</a></li>
+				</ul>
+			</nav>
+			<div class="body">
+				<p>株式会社ニーモニックは2014年2月14日、スタートしました。</p>
+				<p>ウェブサイトは鋭意作成中ですので、しばらくお待ちください。</p>
+			</div>
+		</div>
+		<footer id="footer">
+			<p class="copyright">Copyright &copy; 2014 Mnemonic Co., Ltd. All Rights Reserved.</p>
+		</footer>
 	</div>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+	<script>
+		resizeWindow();
+
+		$(window).resize(resizeWindow);
+
+		function resizeWindow() {
+			var topnavHeight = document.getElementById('subnav').offsetHeight;
+			var viewportHeight = 'innerHeight' in window ? window.innerHeight : document.documentElement.offsetHeight;
+			var containerHeight = String(viewportHeight - topnavHeight) + 'px';
+			$('#container').css({
+				minHeight: containerHeight,
+				height: containerHeight
+			});
+		}
+	</script>
 </body>
 </html>
