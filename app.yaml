@@ -10,6 +10,10 @@ handlers:
   upload: static/.*
   expiration: "1d"
 
+- url: /favicon\.ico
+  static_files: favicon.ico
+  upload: favicon\.ico
+
 - url: /.*
   script: main.app
 
