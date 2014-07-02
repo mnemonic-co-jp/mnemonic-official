@@ -1,12 +1,29 @@
 @charset "UTF-8";
 
+@font-face {
+	font-family: 'Koruri';
+	src: url('/fonts/Koruri-Regular-sub.eot') format('eot');
+	src: url('/fonts/Koruri-Regular-sub.eot?#iefix') format('embedded-opentype'), url('/fonts/Koruri-Regular-sub.woff') format('woff'), url('/fonts/Koruri-Regular-sub.ttf') format('truetype');
+}
+@font-face {
+	font-family: 'KoruriBold';
+	src: url('/fonts/Koruri-Semibold-sub.eot') format('eot');
+	src: url('/fonts/Koruri-Semibold-sub.eot?#iefix') format('embedded-opentype'), url('/fonts/Koruri-Semibold-sub.woff') format('woff'), url('/fonts/Koruri-Semibold-sub.ttf') format('truetype');
+}
+
 body {
+	color: #333;
 	font-size: 14px;
 	line-height: 1;
-	font-family: sans-serif;
+	font-family: Koruri, sans-serif;
 	background-color: #fff;
 	margin: 0;
 	padding: 0;
+}
+
+strong {
+	font-family: KoruriBold;
+	font-weight: bold;
 }
 
 a img {
@@ -56,15 +73,13 @@ a img {
 	height: 138px;
 }
 	#header h1 {
-		background: transparent url("/images/logotype.png") 0 78px no-repeat;
+		color: #666;
+		font-size: 24px;
+		font-weight: normal;
+		letter-spacing: 7px;
 		margin: 0 0 0 200px;
-		padding: 0;
-		width: 295px;
-		height: 103px;
+		padding: 76px 0 0 0;
 	}
-		#header h1 span {
-			display: none;
-		}
 
 #main {
 	margin: 0 auto;
