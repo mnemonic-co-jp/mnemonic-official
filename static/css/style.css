@@ -1,9 +1,7 @@
 @charset "UTF-8";
 
 body {
-	font: 13px;
-	*font-size: small;
-	*font: x-small;
+	font-size: 14px;
 	line-height: 1;
 	font-family: sans-serif;
 	background-color: #fff;
@@ -82,7 +80,7 @@ a img {
 			padding: 60px 0 0 0;
 		}
 			#main .nav ul li {
-				font-size: 123.1%;
+				font-size: 114.3%;
 				font-family: 'Montserrat Alternates', sans-serif;
 				list-style: none;
 				margin: 0 0 20px 0;
@@ -108,7 +106,7 @@ a img {
 }
 	#footer p.copyright {
 		color: #999;
-		font-size: 77%;
+		font-size: 78.6%;
 		margin: 30px auto;
 		width: 1100px;
 	}
