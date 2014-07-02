@@ -8,7 +8,7 @@ import jinja2
 import filters
 
 jinja_environment = jinja2.Environment(
-	loader = jinja2.FileSystemLoader(os.path.dirname(__file__))
+	loader = jinja2.FileSystemLoader(os.path.join(os.path.dirname(__file__), 'templates'))
 )
 jinja_environment.filters.update({
 	'mark2html': filters.mark2html,
@@ -17,12 +17,12 @@ jinja_environment.filters.update({
 
 class MainHandler(webapp2.RequestHandler):
 	def get(self):
-		template = jinja_environment.get_template('index.html')
+		template = jinja_environment.get_template('index.jinja2')
 		self.response.out.write(template.render())
 
 class TestHandler(webapp2.RequestHandler):
 	def get(self):
-		template = jinja_environment.get_template('test.html')
+		template = jinja_environment.get_template('test.jinja2')
 		self.response.out.write(template.render({
 			'markdown_sample': '''
 h1 header
@@ -40,7 +40,7 @@ Paragraphs are separated by a blank line.
 
 class TwitterTestHandler(webapp2.RequestHandler):
 	def get(self):
-		template = jinja_environment.get_template('twitter_test.html')
+		template = jinja_environment.get_template('twitter_test.jinja2')
 		self.response.out.write(template.render({
 			'id_list': [
 				'480238014119956480',

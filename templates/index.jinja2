@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+	<meta charset="UTF-8" />
+	<meta property="og:title" content="ニモニク - 株式会社ニーモニック" />
+	<meta property="og:image" content="http://www.mnemonic.co.jp/ogimage.png" />
+	<meta property="og:description" content="株式会社ニーモニックのオフィシャルサイトです。" />
+	<title>ニモニク - 株式会社ニーモニック</title>
+	<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Montserrat+Alternates" />
+	<link rel="stylesheet" href="/css/style.css" />
+	<style>
+		#home #main .body p {
+			color: #333;
+			font-size: 16px;
+			line-height: 1.8;
+			text-shadow: 0 1px 2px #fff;
+			font-weight: bold;
+			margin: 0 0 .6em 0;
+		}
+	</style>
+</head>
+<body id="home">
+	<nav id="subnav">
+		<div class="subnav-inner">
+			<div class="logo"><a href="/"><img src="/images/logo.png" alt="ニモニク" /></a></div>
+			<ul>
+				<li><a href="https://twitter.com/mnemoniccojp"><img src="/images/socialicon_twitter.png" alt="Twitter" /></a></li>
+				<li><a href="https://www.facebook.com/mnemoniccojp"><img src="/images/socialicon_facebook.png" alt="Facebook" /></a></li>
+				<li><a href="https://plus.google.com/115250456205583744555" rel="publisher"><img src="/images/socialicon_googleplus.png" alt="Google+" /></a></li>
+			</ul>
+		</div>
+	</nav>
+	<div id="container">
+		<header id="header">
+			<h1><span>株式会社ニーモニック</span></h1>
+		</header>
+		<div id="main">
+			<nav class="nav" role="navigation">
+				<ul>
+					<li class="about"><a href="#">About</a></li>
+					<li class="blog"><a href="#">Blog</a></li>
+					<li class="contact"><a href="#">Contact</a></li>
+				</ul>
+			</nav>
+			<div class="body">
+				<p>株式会社ニーモニックは2014年2月14日、スタートしました。</p>
+				<p>ウェブサイトは鋭意作成中ですので、しばらくお待ちください。</p>
+			</div>
+		</div>
+		<footer id="footer">
+			<p class="copyright">Copyright &copy; 2014 Mnemonic Co., Ltd. All Rights Reserved.</p>
+		</footer>
+	</div>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+    <script src="/js/common.js"></script>
+	<script>
+		resizeWindow();
+
+		$(window).resize(resizeWindow);
+
+		function resizeWindow() {
+			var topnavHeight = document.getElementById('subnav').offsetHeight;
+			var viewportHeight = 'innerHeight' in window ? window.innerHeight : document.documentElement.offsetHeight;
+			var containerHeight = String(viewportHeight - topnavHeight) + 'px';
+			$('#container').css({
+				minHeight: containerHeight,
+				height: containerHeight
+			});
+		}
+	</script>
+</body>
+</html>
