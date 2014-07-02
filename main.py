@@ -20,6 +20,11 @@ class MainHandler(webapp2.RequestHandler):
 		template = jinja_environment.get_template('index.jinja2')
 		self.response.out.write(template.render())
 
+class AboutHandler(webapp2.RequestHandler):
+	def get(self):
+		template = jinja_environment.get_template('about.jinja2')
+		self.response.out.write(template.render())
+
 class TestHandler(webapp2.RequestHandler):
 	def get(self):
 		template = jinja_environment.get_template('test.jinja2')
@@ -52,6 +57,7 @@ class TwitterTestHandler(webapp2.RequestHandler):
 
 app = webapp2.WSGIApplication([
 	('/', MainHandler),
+	('/about', AboutHandler),
 	('/test', TestHandler),
 	('/test/twitter', TwitterTestHandler)
 ], debug=True)

@@ -15,7 +15,7 @@
 
 body {
 	color: #333;
-	font-size: 14px;
+	font-size: 16px;
 	line-height: 1;
 	font-family: Verdena, Koruri, sans-serif;
 	background-color: #fff;
@@ -59,9 +59,17 @@ a img {
 
 #container {
 	position: relative;
-	background: #fff url("/images/bg_main.jpg") top center no-repeat;
+	background: #fff url("/images/bg_sub.jpg") top center no-repeat;
+	padding-bottom: 100px;
 	height: auto !important;
 	z-index: 0;
+}
+#container:after {
+	content: ".";
+	display: block;
+	visibility: hidden;
+	clear: both;
+	height: 0;
 }
 
 #header {
@@ -92,7 +100,7 @@ a img {
 			padding: 60px 0 0 0;
 		}
 			#main .nav ul li {
-				font-size: 114.3%;
+				font-size: 18px;
 				font-family: 'Montserrat Alternates', sans-serif;
 				list-style: none;
 				margin: 0 0 20px 0;
@@ -107,8 +115,21 @@ a img {
 				}
 	#main .body {
 		float: right;
+		padding-top: 20px;
 		width: 860px;
 	}
+		#main .body .article {
+			margin-top: 40px;
+		}
+			#main .body .article h2 {
+				color: #000;
+				font-size: 20px;
+				margin: 0 0 20px 0;
+			}
+			#main .body .article p {
+				line-height: 1.6;
+				margin: 0 0 10px 0;
+			}
 
 #footer {
 	position: absolute;
@@ -118,7 +139,7 @@ a img {
 }
 	#footer p.copyright {
 		color: #999;
-		font-size: 78.6%;
+		font-size: 11px;
 		margin: 30px auto;
 		width: 1100px;
 	}
