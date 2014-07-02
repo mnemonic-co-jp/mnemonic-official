@@ -2,11 +2,13 @@
 
 @font-face {
 	font-family: 'Koruri';
+	font-weight: normal;
 	src: url('/fonts/Koruri-Regular-sub.eot') format('eot');
 	src: url('/fonts/Koruri-Regular-sub.eot?#iefix') format('embedded-opentype'), url('/fonts/Koruri-Regular-sub.woff') format('woff'), url('/fonts/Koruri-Regular-sub.ttf') format('truetype');
 }
 @font-face {
-	font-family: 'KoruriBold';
+	font-family: 'Koruri';
+	font-weight: bold;
 	src: url('/fonts/Koruri-Semibold-sub.eot') format('eot');
 	src: url('/fonts/Koruri-Semibold-sub.eot?#iefix') format('embedded-opentype'), url('/fonts/Koruri-Semibold-sub.woff') format('woff'), url('/fonts/Koruri-Semibold-sub.ttf') format('truetype');
 }
@@ -15,15 +17,10 @@ body {
 	color: #333;
 	font-size: 14px;
 	line-height: 1;
-	font-family: Koruri, sans-serif;
+	font-family: Verdena, Koruri, sans-serif;
 	background-color: #fff;
 	margin: 0;
 	padding: 0;
-}
-
-strong {
-	font-family: KoruriBold;
-	font-weight: bold;
 }
 
 a img {
@@ -73,10 +70,10 @@ a img {
 	height: 138px;
 }
 	#header h1 {
-		color: #666;
+		color: #999;
 		font-size: 24px;
-		font-weight: normal;
-		letter-spacing: 7px;
+		font-weight: bold;
+		letter-spacing: 10px;
 		margin: 0 0 0 200px;
 		padding: 76px 0 0 0;
 	}
