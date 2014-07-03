@@ -4,6 +4,7 @@
 
 import webapp2
 import os
+import logging
 import jinja2
 import filters
 
@@ -15,19 +16,32 @@ jinja_environment.filters.update({
 	'nl2br': filters.nl2br
 })
 
+def Error404Handler(request, response, exception):
+	logging.exception(exception)
+	template = jinja_environment.get_template('404.html')
+	response.out.write(template.render())
+
+def Error500Handler(request, response, exception):
+	logging.exception(exception)
+	template = jinja_environment.get_template('500.html')
+	response.out.write(template.render())
+
 class MainHandler(webapp2.RequestHandler):
 	def get(self):
-		template = jinja_environment.get_template('index.jinja2')
+		template = jinja_environment.get_template('index.html')
 		self.response.out.write(template.render())
 
-class AboutHandler(webapp2.RequestHandler):
-	def get(self):
-		template = jinja_environment.get_template('about.jinja2')
+class PageHandler(webapp2.RequestHandler):
+	def get(self, name):
+		try:
+			template = jinja_environment.get_template(name + '.html')
+		except IOError:
+			template = jinja_environment.get_template('404.html')
 		self.response.out.write(template.render())
 
 class TestHandler(webapp2.RequestHandler):
 	def get(self):
-		template = jinja_environment.get_template('test.jinja2')
+		template = jinja_environment.get_template('test.html')
 		self.response.out.write(template.render({
 			'markdown_sample': '''
 h1 header
@@ -45,7 +59,7 @@ Paragraphs are separated by a blank line.
 
 class TwitterTestHandler(webapp2.RequestHandler):
 	def get(self):
-		template = jinja_environment.get_template('twitter_test.jinja2')
+		template = jinja_environment.get_template('twitter_test.html')
 		self.response.out.write(template.render({
 			'id_list': [
 				'480238014119956480',
@@ -56,8 +70,10 @@ class TwitterTestHandler(webapp2.RequestHandler):
 		}))
 
 app = webapp2.WSGIApplication([
-	('/', MainHandler),
-	('/about', AboutHandler),
-	('/test', TestHandler),
-	('/test/twitter', TwitterTestHandler)
+	(r'/', MainHandler),
+	(r'/page/(\w+)/?', PageHandler),
+	(r'/test', TestHandler),
+	(r'/test/twitter', TwitterTestHandler)
 ], debug=True)
+app.error_handlers[404] = Error404Handler
+app.error_handlers[500] = Error500Handler
