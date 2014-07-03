@@ -10,7 +10,7 @@ import json
 import logging
 import datetime
 
-from model import Entry
+from models import Entry
 
 jinja_environment = jinja2.Environment(
 	loader = jinja2.FileSystemLoader(os.path.join(os.path.dirname(__file__), 'templates'))
@@ -45,14 +45,20 @@ class PageHandler(webapp2.RequestHandler):
 
 class BlogIndexHandler(webapp2.RequestHandler):
 	def get(self):
-		entries = Entry.all().order('-created_at')
+		entries = Entry.get_entries()
 		for entry in entries:
 			logging.debug(entry.title)
+			logging.debug(entry.twitter_ids[0])
 		self.response.out.write(u'ブログのインデックスページ')
 
 class BlogHandler(webapp2.RequestHandler):
 	def get(self, id):
-		entry = Entry(title='hoge' + id)
+		entry = Entry(
+			title='hoge'+id,
+			twitter_ids=[111111, 22222],
+			body=u'あああああ\nいいいいい',
+			tags=['hoge', 'fuga']
+		)
 		entry.put()
 		self.response.out.write(u'ブログの個別ページ: ' + id)
 
