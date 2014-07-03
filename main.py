@@ -39,6 +39,14 @@ class PageHandler(webapp2.RequestHandler):
 			template = jinja_environment.get_template('404.html')
 		self.response.out.write(template.render())
 
+class BlogIndexHandler(webapp2.RequestHandler):
+	def get(self):
+		self.response.out.write(u'ブログのインデックスページ')
+
+class BlogHandler(webapp2.RequestHandler):
+	def get(self, id):
+		self.response.out.write(u'ブログの個別ページ: ' + id)
+
 class TestHandler(webapp2.RequestHandler):
 	def get(self):
 		template = jinja_environment.get_template('test.html')
@@ -72,6 +80,8 @@ class TwitterTestHandler(webapp2.RequestHandler):
 app = webapp2.WSGIApplication([
 	(r'/', MainHandler),
 	(r'/page/(\w+)/?', PageHandler),
+	(r'/blogs/?', BlogIndexHandler),
+	(r'/blog/(\d+)/?', BlogHandler),
 	(r'/test', TestHandler),
 	(r'/test/twitter', TwitterTestHandler)
 ], debug=True)
