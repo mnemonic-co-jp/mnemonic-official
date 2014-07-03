@@ -14,7 +14,7 @@
 }
 
 body {
-	color: #333;
+	color: #535362;
 	font-size: 16px;
 	line-height: 1;
 	font-family: Verdena, Koruri, sans-serif;
@@ -28,7 +28,7 @@ a img {
 }
 
 #subnav {
-	background-color: #ee7f3c;
+	background-color: #ff9326;
 	width: 100%;
 }
 	#subnav .subnav-inner {
@@ -78,7 +78,7 @@ a img {
 	height: 138px;
 }
 	#header h1 {
-		color: #999;
+		color: #9797a6;
 		font-size: 24px;
 		font-weight: bold;
 		letter-spacing: 10px;
@@ -101,17 +101,17 @@ a img {
 		}
 			#main .nav ul li {
 				font-size: 18px;
-				font-family: 'Montserrat Alternates', sans-serif;
+				font-family: "Montserrat Alternates", sans-serif;
 				list-style: none;
 				margin: 0 0 20px 0;
 				padding: 0;
 			}
 				#main .nav ul li a {
-					color: #999;
+					color: #9797a6;
 					text-decoration: none;
 				}
 				#main .nav ul li a:hover {
-					color: #ee7f3c;
+					color: #ff9326;
 				}
 	#main .body {
 		float: right;
@@ -122,12 +122,14 @@ a img {
 			margin-top: 40px;
 		}
 			#main .body .article h2 {
-				color: #000;
+				color: #241607;
 				font-size: 20px;
+				text-shadow: 0 2px 1px #fff;
 				margin: 0 0 20px 0;
 			}
 			#main .body .article p {
 				line-height: 1.6;
+				text-shadow: 0 0 1px rgba(0, 0, 0, .1);
 				margin: 0 0 10px 0;
 			}
 
@@ -138,7 +140,7 @@ a img {
 	width: 100%;
 }
 	#footer p.copyright {
-		color: #999;
+		color: #9797a6;
 		font-size: 11px;
 		margin: 30px auto;
 		width: 1100px;
