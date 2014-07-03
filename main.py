@@ -4,9 +4,13 @@
 
 import webapp2
 import os
-import logging
 import jinja2
 import filters
+import json
+import logging
+import datetime
+
+from model import Entry
 
 jinja_environment = jinja2.Environment(
 	loader = jinja2.FileSystemLoader(os.path.join(os.path.dirname(__file__), 'templates'))
@@ -41,10 +45,15 @@ class PageHandler(webapp2.RequestHandler):
 
 class BlogIndexHandler(webapp2.RequestHandler):
 	def get(self):
+		entries = Entry.all().order('-created_at')
+		for entry in entries:
+			logging.debug(entry.title)
 		self.response.out.write(u'ブログのインデックスページ')
 
 class BlogHandler(webapp2.RequestHandler):
 	def get(self, id):
+		entry = Entry(title='hoge' + id)
+		entry.put()
 		self.response.out.write(u'ブログの個別ページ: ' + id)
 
 class TestHandler(webapp2.RequestHandler):
