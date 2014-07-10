@@ -28,8 +28,12 @@ a img {
 }
 
 #subnav {
+	position: fixed;
+	left: 0;
+	top: 0;
 	background-color: #ff9326;
 	width: 100%;
+	z-index: 10;
 }
 	#subnav .subnav-inner {
 		position: relative;
@@ -43,23 +47,46 @@ a img {
 			left: 0;
 			top: 22px;
 		}
-		#subnav .subnav-inner ul {
-			position: absolute;
-			right: 0;
-			top: 10px;
-			margin: 0;
-			padding: 0;
-		}
-			#subnav .subnav-inner ul li {
-				float: left;
-				list-style: none;
-				margin: 0 0 0 20px;
+			#subnav .subnav-inner ul.altnav {
+				position: absolute;
+				left: 180px;
+				top: 13px;
+				margin: 0;
 				padding: 0;
 			}
+				#subnav .subnav-inner ul.altnav li {
+					float: left;
+					font-size: 18px;
+					font-family: "Montserrat Alternates", sans-serif;
+					list-style: none;
+					margin: 0 0 0 20px;
+					padding: 0;
+				}
+					#subnav .subnav-inner ul.altnav li a {
+						color: #fff;
+						text-decoration: none;
+					}
+					#subnav .subnav-inner ul.altnav li a:hover {
+						color: #eee;
+					}
+			#subnav .subnav-inner ul.rightnav {
+				position: absolute;
+				right: 0;
+				top: 10px;
+				margin: 0;
+				padding: 0;
+			}
+				#subnav .subnav-inner ul.rightnav li {
+					float: left;
+					list-style: none;
+					margin: 0 0 0 20px;
+					padding: 0;
+				}
 
 #container {
 	position: relative;
 	background: #fff url("/images/bg_sub.jpg") top center no-repeat;
+	background-attachment: fixed;
 	padding-bottom: 100px;
 	height: auto !important;
 	z-index: 0;
@@ -75,7 +102,7 @@ a img {
 #header {
 	margin: 0 auto;
 	width: 1100px;
-	height: 138px;
+	height: 182px;
 }
 	#header h1 {
 		color: #9797a6;
@@ -83,7 +110,7 @@ a img {
 		font-weight: bold;
 		letter-spacing: 10px;
 		margin: 0 0 0 200px;
-		padding: 76px 0 0 0;
+		padding: 120px 0 0 0;
 	}
 
 #main {
