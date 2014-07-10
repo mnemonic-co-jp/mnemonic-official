@@ -12,4 +12,16 @@ $(function() {
 
 	$(window).resize(resizeWindow);
 
+	function toggleNaviPosition() {
+		if ($('body').scrollTop() > 150) {
+			$('#nav').hide();
+			$('#altnav').fadeIn('slow');
+		} else {
+			$('#nav').fadeIn('slow');
+			$('#altnav').hide();
+		}
+	}
+
+	$(window).scroll(toggleNaviPosition);
+
 });
