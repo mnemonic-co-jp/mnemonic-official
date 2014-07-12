@@ -1,1 +1,10 @@
+{% extends 'base.html' %}
+
+{% block title %}ブログ記事: {{ title }}｜{% endblock %}
+
+{% block content %}
+	<article class="article">
+		<h2>{{ title }}</h2>
 		<p>{{ date | datetime2JDate }}</p>
+	</article>
+{% endblock %}
