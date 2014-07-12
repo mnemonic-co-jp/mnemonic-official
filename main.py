@@ -20,22 +20,15 @@ jinja_environment.filters.update({
 	'nl2br': filters.nl2br
 })
 
-def Error404Handler(request, response, exception):
-	logging.exception(exception)
-	template = jinja_environment.get_template('404.html')
-	response.out.write(template.render())
+class BaseHandler(webapp2.RequestHandler):
+	pass
 
-def Error500Handler(request, response, exception):
-	logging.exception(exception)
-	template = jinja_environment.get_template('500.html')
-	response.out.write(template.render())
-
-class MainHandler(webapp2.RequestHandler):
+class MainHandler(BaseHandler):
 	def get(self):
 		template = jinja_environment.get_template('index.html')
 		self.response.out.write(template.render())
 
-class PageHandler(webapp2.RequestHandler):
+class PageHandler(BaseHandler):
 	def get(self, name):
 		try:
 			template = jinja_environment.get_template(name + '.html')
@@ -43,7 +36,7 @@ class PageHandler(webapp2.RequestHandler):
 			template = jinja_environment.get_template('404.html')
 		self.response.out.write(template.render())
 
-class BlogIndexHandler(webapp2.RequestHandler):
+class BlogIndexHandler(BaseHandler):
 	def get(self):
 		entries = Entry.get_entries()
 		for entry in entries:
@@ -62,7 +55,7 @@ class BlogHandler(webapp2.RequestHandler):
 		entry.put()
 		self.response.out.write(u'ブログの個別ページ: ' + id)
 
-class TestHandler(webapp2.RequestHandler):
+class TestHandler(BaseHandler):
 	def get(self):
 		template = jinja_environment.get_template('test.html')
 		self.response.out.write(template.render({
@@ -80,7 +73,7 @@ Paragraphs are separated by a blank line.
 '''
 		}))
 
-class TwitterTestHandler(webapp2.RequestHandler):
+class TwitterTestHandler(BaseHandler):
 	def get(self):
 		template = jinja_environment.get_template('twitter_test.html')
 		self.response.out.write(template.render({
@@ -91,6 +84,16 @@ class TwitterTestHandler(webapp2.RequestHandler):
 				'480239438878892032'
 			]
 		}))
+
+def Error404Handler(request, response, exception):
+	logging.exception(exception)
+	template = jinja_environment.get_template('404.html')
+	response.out.write(template.render())
+
+def Error500Handler(request, response, exception):
+	logging.exception(exception)
+	template = jinja_environment.get_template('500.html')
+	response.out.write(template.render())
 
 app = webapp2.WSGIApplication([
 	(r'/', MainHandler),
