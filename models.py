@@ -6,8 +6,8 @@ from google.appengine.ext import ndb
 import datetime
 
 class BaseModel(ndb.Model):
-    created_at = ndb.DateTimeProperty(auto_now_add=True)
-    updated_at = ndb.DateTimeProperty(auto_now=True)
+	created_at = ndb.DateTimeProperty(auto_now_add=True)
+	updated_at = ndb.DateTimeProperty(auto_now=True)
 
 class Entry(BaseModel):
 	title = ndb.StringProperty()
