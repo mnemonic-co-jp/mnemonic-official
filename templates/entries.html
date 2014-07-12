@@ -1,0 +1,18 @@
+{% extends 'base.html' %}
+
+{% block title %}ブログ記事一覧｜{% endblock %}
+
+{% block content %}
+	<article class="article">
+		<h2>ブログ記事一覧</h2>
+	{% if entries %}
+		<ul>
+		{% for entry in entries %}
+			<li><a href="/blog/{{ entry.key.id() }}">{{ entry.title }}</a></li>
+		{% endfor %}
+		</ul>
+	{% else %}
+		<p><em>記事がありません。</em></p>
+	{% endif %}
+	</article>
+{% endblock %}

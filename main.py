@@ -16,6 +16,7 @@ jinja_environment = jinja2.Environment(
 	loader = jinja2.FileSystemLoader(os.path.join(os.path.dirname(__file__), 'templates'))
 )
 jinja_environment.filters.update({
+	'datetime2JDate': filters.datetime2JDate,
 	'mark2html': filters.mark2html,
 	'nl2br': filters.nl2br
 })
@@ -38,22 +39,28 @@ class PageHandler(BaseHandler):
 
 class BlogIndexHandler(BaseHandler):
 	def get(self):
-		entries = Entry.get_entries()
-		for entry in entries:
-			logging.debug(entry.title)
-			logging.debug(entry.twitter_ids[0])
-		self.response.out.write(u'ブログのインデックスページ')
+		entries = Entry.get_entries().fetch()
+		template = jinja_environment.get_template('entries.html')
+		self.response.out.write(template.render({
+			'entries': entries
+		}))
 
-class BlogHandler(webapp2.RequestHandler):
-	def get(self, id):
-		entry = Entry(
-			title='hoge'+id,
-			twitter_ids=[111111, 22222],
-			body=u'あああああ\nいいいいい',
-			tags=['hoge', 'fuga']
-		)
-		entry.put()
-		self.response.out.write(u'ブログの個別ページ: ' + id)
+class BlogEntryHandler(BaseHandler):
+	def get(self, entry_id):
+		entry = Entry.get_entry(entry_id)
+		if entry is None:
+			template = jinja_environment.get_template('404.html')
+			self.response.out.write(template.render())
+		else:
+			template = jinja_environment.get_template('entry.html')
+			self.response.out.write(template.render({
+				'title': entry.title,
+				'date': entry.date
+			}))
+
+class BlogTestHandler(BaseHandler):
+	def get(self):
+		Entry.create_entry()
 
 class TestHandler(BaseHandler):
 	def get(self):
@@ -99,7 +106,8 @@ app = webapp2.WSGIApplication([
 	(r'/', MainHandler),
 	(r'/page/(\w+)/?', PageHandler),
 	(r'/blogs/?', BlogIndexHandler),
-	(r'/blog/(\d+)/?', BlogHandler),
+	(r'/blog/(\d+)/?', BlogEntryHandler),
+	(r'/blog/test', BlogTestHandler),
 	(r'/test', TestHandler),
 	(r'/test/twitter', TwitterTestHandler)
 ], debug=True)

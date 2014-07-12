@@ -20,4 +20,17 @@ class Entry(BaseModel):
 
 	@classmethod
 	def get_entries(cls):
-		return cls.query().order(-cls.created_at)
+		return cls.query().order(-cls.date)
+
+	@classmethod
+	def get_entry(cls, entry_id):
+		return cls.get_by_id(int(entry_id))
+
+	@classmethod
+	def create_entry(cls):
+		# stab
+		entry = cls(
+			title='hogehoge',
+			date=datetime.datetime.now()
+		)
+		entry.put()
