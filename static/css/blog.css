@@ -1,0 +1,43 @@
+@charset "UTF-8";
+
+#blog-header {
+	margin: 40px 0;
+}
+	#blog-header h1 {
+		color: #000;
+		font-size: 28px;
+		line-height: 1.4;
+		font-weight: normal;
+		text-shadow: 0 2px 1px #fff;
+		margin: -3px 0 20px 0;
+		padding: 0;
+	}
+	#blog-header p.meta {
+		font-size: 13px;
+		margin: 0 0 10px 0;
+		padding: 0;
+	}
+	#blog-header ul.tags {
+		margin: 0 0 0 -2px;
+		padding: 0;
+	}
+		#blog-header ul.tags li {
+			display: inline-block;
+			float: left;
+			font-size: 11px;
+			line-height: 1;
+			background-color: #fdf5ef;
+			border: 1px solid #ff9326;
+			border-radius: 3px;
+			list-style: none;
+			margin: 2px;
+			padding: 3px 5px;
+		}
+		#blog-header ul.tags li:hover {
+			background-color: #fff;
+		}
+			#blog-header ul.tags li a {
+				display: block;
+				color: #ff9326;
+				text-decoration: none;
+			}

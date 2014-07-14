@@ -27,6 +27,17 @@ a img {
 	border: none;
 }
 
+.clearfix {
+	display: inline-table;
+}
+.clearfix:after {
+	content: ".";
+	display: block;
+	visibility: hidden;
+	clear: both;
+	height: 0;
+}
+
 #subnav {
 	position: fixed;
 	left: 0;
@@ -142,23 +153,24 @@ a img {
 				}
 	#main .body {
 		float: right;
-		padding-top: 20px;
+		padding-top: 16px;
 		width: 860px;
 	}
-		#main .body .article {
+		#main .body h2 {
+			color: #241607;
+			font-size: 20px;
+			line-height: 1.4;
+			text-shadow: 0 2px 1px #fff;
+			margin: 0 0 20px 0;
+		}
+		#main .body p {
+			line-height: 1.6;
+			text-shadow: 0 0 1px rgba(0, 0, 0, .1);
+			margin: 0 0 10px 0;
+		}
+		#main .body .section {
 			margin-top: 40px;
 		}
-			#main .body .article h2 {
-				color: #241607;
-				font-size: 20px;
-				text-shadow: 0 2px 1px #fff;
-				margin: 0 0 20px 0;
-			}
-			#main .body .article p {
-				line-height: 1.6;
-				text-shadow: 0 0 1px rgba(0, 0, 0, .1);
-				margin: 0 0 10px 0;
-			}
 
 #footer {
 	position: absolute;

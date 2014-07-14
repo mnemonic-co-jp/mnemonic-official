@@ -2,9 +2,26 @@
 
 {% block title %}ブログ記事: {{ title }}｜{% endblock %}
 
+{% block head %}
+	<link rel="stylesheet" href="/css/blog.css" />
+{% endblock %}
+
 {% block content %}
-	<article class="article">
-		<h2>{{ title }}</h2>
-		<p>{{ date | datetime2JDate }}</p>
-	</article>
+	<header id="blog-header">
+		<h1>{{ title }}</h1>
+		<p class="meta"><span class="date"><span class=" glyphicon glyphicon-time"></span> {{ date | datetime2JDate }}</span></p>
+		<ul class="tags clearfix">
+			<li><a href="#">ほげほげ</a></li>
+			<li><a href="#">ふがふが</a></li>
+			<li><a href="#">ほげほげ</a></li>
+		</ul>
+	</header>
+	<section class="section">
+		<h2>中身出し</h2>
+		<p>ああああああああああああああああああああああああああああああああああああああああああああああああああああああああああああああああああああああ</p>
+	</section>
+	<section class="section">
+		<h2>中身出し</h2>
+		<p>ああああああああああああああああああああああああああああああ</p>
+	</section>
 {% endblock %}
