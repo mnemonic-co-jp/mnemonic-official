@@ -30,6 +30,18 @@ class Entry(BaseModel):
     # stab
     entry = cls(
       title='hogehoge',
-      date=datetime.datetime.now()
+      date=datetime.datetime.now(),
+      twitter_ids=[
+        480238014119956480,
+        480238687272202240,
+        480239039262363648,
+        480239438878892032
+      ],
+      body=u'あああああ/nいいいいい',
+      tags=[
+        u'ほげほげ',
+        u'ふがふが',
+        u'ほげほげ'
+      ]
     )
     entry.put()

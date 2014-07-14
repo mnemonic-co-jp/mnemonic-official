@@ -61,36 +61,6 @@ class BlogTestHandler(BaseHandler):
   def get(self):
     Entry.create_entry()
 
-class TestHandler(BaseHandler):
-  def get(self):
-    template = jinja_environment.get_template('test.html')
-    self.response.out.write(template.render({
-      'markdown_sample': '''
-h1 header
-============
-
-Paragraphs are separated by a blank line.
-
-2nd paragraph. *Italic*, **bold**, `monospace`.
-
-  * this one
-  * that one
-  * the other one
-'''
-    }))
-
-class TwitterTestHandler(BaseHandler):
-  def get(self):
-    template = jinja_environment.get_template('twitter_test.html')
-    self.response.out.write(template.render({
-      'id_list': [
-        '480238014119956480',
-        '480238687272202240',
-        '480239039262363648',
-        '480239438878892032'
-      ]
-    }))
-
 def Error404Handler(request, response, exception):
   logging.exception(exception)
   template = jinja_environment.get_template('404.html')
@@ -107,8 +77,7 @@ app = webapp2.WSGIApplication([
   (r'/blogs/?', BlogIndexHandler),
   (r'/blog/(\d+)/?', BlogEntryHandler),
   (r'/blog/test', BlogTestHandler),
-  (r'/test', TestHandler),
-  (r'/test/twitter', TwitterTestHandler)
+  (r'/blog/test', BlogTestHandler)
 ], debug=True)
 app.error_handlers[404] = Error404Handler
 app.error_handlers[500] = Error500Handler

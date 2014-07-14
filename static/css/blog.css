@@ -24,20 +24,22 @@
 		#blog-header ul.tags li {
 			display: inline-block;
 			float: left;
-			font-size: 11px;
-			line-height: 1;
-			background-color: #fdf5ef;
-			border: 1px solid #ff9326;
-			border-radius: 3px;
+			font-size: 13px;
+			line-height: 1.6;
 			list-style: none;
 			margin: 2px;
-			padding: 3px 5px;
-		}
-		#blog-header ul.tags li:hover {
-			background-color: #fff;
 		}
 			#blog-header ul.tags li a {
 				display: block;
 				color: #ff9326;
+				font-size: 11px;
+				line-height: 1;
 				text-decoration: none;
+				background-color: #fdf5ef;
+				border: 1px solid #ff9326;
+				border-radius: 3px;
+				padding: 3px 5px;
+			}
+			#blog-header ul.tags li a:hover {
+				background-color: #fff;
 			}

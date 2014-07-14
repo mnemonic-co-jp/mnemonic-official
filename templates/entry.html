@@ -4,24 +4,40 @@
 
 {% block head %}
 	<link rel="stylesheet" href="/css/blog.css" />
+	<script async src="//platform.twitter.com/widgets.js" charset="utf-8"></script>
+	<script>
+		$(function() {
+			setInterval(function() {
+				$('.twitter-tweet-rendered').css({
+					maxWidth: '100%',
+					width: '860px'
+				});
+			}, 100);
+		});
+	</script>
 {% endblock %}
 
 {% block content %}
 	<header id="blog-header">
 		<h1>{{ title }}</h1>
-		<p class="meta"><span class="date"><span class=" glyphicon glyphicon-time"></span> {{ date | datetime2JDate }}</span></p>
+		<p class="meta"><span class="date"><span class="glyphicon glyphicon-time"></span> {{ date | datetime2JDate }}</span></p>
+	{% if tags | length %}
 		<ul class="tags clearfix">
-			<li><a href="#">ほげほげ</a></li>
-			<li><a href="#">ふがふが</a></li>
-			<li><a href="#">ほげほげ</a></li>
+			<li><span class="glyphicon glyphicon-tag"></span></li>
+		{% for tag in tags %}
+			<li><a href="#">{{ tag }}</a></li>
+		{% endfor %}
 		</ul>
+	{% endif %}
 	</header>
-	<section class="section">
-		<h2>中身出し</h2>
-		<p>ああああああああああああああああああああああああああああああああああああああああああああああああああああああああああああああああああああああ</p>
+{% if twitter_ids | length %}
+	<section class="section tweet">
+	{% for id in twitter_ids %}
+		<blockquote class="twitter-tweet" lang="ja"><a href="https://twitter.com/mnemoniccojp/statuses/{{ id }}">読み込み中...</a></blockquote>
+	{% endfor %}
 	</section>
-	<section class="section">
-		<h2>中身出し</h2>
-		<p>ああああああああああああああああああああああああああああああ</p>
+{% endif %}
+	<section class="section markdown-body">
+		{{ body | mark2html }}
 	</section>
 {% endblock %}
