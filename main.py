@@ -54,7 +54,10 @@ class BlogEntryHandler(BaseHandler):
       template = jinja_environment.get_template('entry.html')
       self.response.out.write(template.render({
         'title': entry.title,
-        'date': entry.date
+        'date': entry.date,
+        'twitter_ids': entry.twitter_ids,
+        'body': entry.body,
+        'tags': entry.tags
       }))
 
 class BlogTestHandler(BaseHandler):
@@ -76,7 +79,6 @@ app = webapp2.WSGIApplication([
   (r'/page/(\w+)/?', PageHandler),
   (r'/blogs/?', BlogIndexHandler),
   (r'/blog/(\d+)/?', BlogEntryHandler),
-  (r'/blog/test', BlogTestHandler),
   (r'/blog/test', BlogTestHandler)
 ], debug=True)
 app.error_handlers[404] = Error404Handler
