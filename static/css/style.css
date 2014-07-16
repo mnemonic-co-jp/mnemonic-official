@@ -135,7 +135,7 @@ a img {
 		#main .nav ul {
 			text-align: right;
 			margin: 0;
-			padding: 60px 0 0 0;
+			padding: 64px 0 0 0;
 		}
 			#main .nav ul li {
 				font-size: 18px;
@@ -153,7 +153,6 @@ a img {
 				}
 	#main .body {
 		float: right;
-		padding-top: 16px;
 		width: 860px;
 	}
 		#main .body h2 {
@@ -169,7 +168,7 @@ a img {
 			margin: 0 0 10px 0;
 		}
 		#main .body .section {
-			margin-top: 40px;
+			margin-top: 60px;
 		}
 
 #footer {
