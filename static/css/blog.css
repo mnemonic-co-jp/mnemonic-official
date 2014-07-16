@@ -46,7 +46,7 @@ ul.entry-list {
 /* 記事ページ */
 
 #blog-header {
-	margin: 40px 0;
+	margin: 60px 0 30px 0;
 }
 	#blog-header h1 {
 		color: #000;
@@ -93,8 +93,36 @@ ul.entry-list {
 				background-color: #fff;
 			}
 
-.tweet {}
-	.tweet blockquote.twitter-tweet a {
+#tweet {
+
+}
+	#tweet p.tweetnav {
 		color: #999;
-		text-decoration: none;
+		margin: 0 0 10px 0;
+		padding: 0;
 	}
+	#tweet p.tweetnav .pagenate {
+		font-size: 20px;
+		padding-left: 20px;
+	}
+	#tweet p.tweetnav .pagenate:hover {
+		cursor: pointer;
+	}
+	#tweet p.tweetnav .pagenate.disabled {
+		color: #ddd;
+	}
+	#tweet p.tweetnav .pagenate.disabled:hover {
+		cursor: default;
+	}
+	#tweet p.tweetnav .pageinfo {
+		font-size: 13px;
+		padding-left: 30px;
+	}
+	#tweet .slidearea {
+		width: 880px;
+		height: 230px;
+		overflow: hidden;
+	}
+		#tweet .slidearea .slidebox {
+
+		}
