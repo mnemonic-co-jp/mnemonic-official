@@ -19,25 +19,25 @@
 
 {% block content %}
 	<header id="blog-header">
-		<h1>{{ title }}</h1>
-		<p class="meta"><span class="date"><span class="glyphicon glyphicon-time"></span> {{ date | datetime2JDate }}</span></p>
-	{% if tags | length %}
+		<h1>{{ entry.title }}</h1>
+		<p class="meta"><span class="date"><span class="glyphicon glyphicon-time"></span> {{ entry.date | datetime2JDate }}</span></p>
+	{% if entry.tags | length %}
 		<ul class="tags clearfix">
 			<li><span class="glyphicon glyphicon-tag"></span></li>
-		{% for tag in tags %}
+		{% for tag in entry.tags %}
 			<li><a href="#">{{ tag }}</a></li>
 		{% endfor %}
 		</ul>
 	{% endif %}
 	</header>
-{% if twitter_ids | length %}
+{% if entry.twitter_ids | length %}
 	<section class="section tweet">
-	{% for id in twitter_ids %}
+	{% for id in entry.twitter_ids %}
 		<blockquote class="twitter-tweet" lang="ja"><a href="https://twitter.com/mnemoniccojp/statuses/{{ id }}">読み込み中...</a></blockquote>
 	{% endfor %}
 	</section>
 {% endif %}
 	<section class="section markdown-body">
-		{{ body | mark2html }}
+		{{ entry.body | mark2html }}
 	</section>
 {% endblock %}

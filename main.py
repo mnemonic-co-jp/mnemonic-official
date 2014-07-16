@@ -39,7 +39,7 @@ class PageHandler(BaseHandler):
 class BlogIndexHandler(BaseHandler):
   def get(self):
     entries = Entry.get_entries().fetch()
-    template = jinja_environment.get_template('entries.html')
+    template = jinja_environment.get_template('blog_list.html')
     self.response.out.write(template.render({
       'entries': entries
     }))
@@ -51,13 +51,9 @@ class BlogEntryHandler(BaseHandler):
       template = jinja_environment.get_template('404.html')
       self.response.out.write(template.render())
     else:
-      template = jinja_environment.get_template('entry.html')
+      template = jinja_environment.get_template('blog_entry.html')
       self.response.out.write(template.render({
-        'title': entry.title,
-        'date': entry.date,
-        'twitter_ids': entry.twitter_ids,
-        'body': entry.body,
-        'tags': entry.tags
+        'entry': entry
       }))
 
 class BlogTestHandler(BaseHandler):
@@ -77,7 +73,7 @@ def Error500Handler(request, response, exception):
 app = webapp2.WSGIApplication([
   (r'/', MainHandler),
   (r'/page/(\w+)/?', PageHandler),
-  (r'/blogs/?', BlogIndexHandler),
+  (r'/blog/?', BlogIndexHandler),
   (r'/blog/(\d+)/?', BlogEntryHandler),
   (r'/blog/test', BlogTestHandler)
 ], debug=True)
