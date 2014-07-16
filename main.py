@@ -51,6 +51,7 @@ class BlogEntryHandler(BaseHandler):
       template = jinja_environment.get_template('404.html')
       self.response.out.write(template.render())
     else:
+      Entry.increment_views(entry_id)
       template = jinja_environment.get_template('blog_entry.html')
       self.response.out.write(template.render({
         'entry': entry

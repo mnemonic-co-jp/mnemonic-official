@@ -14,6 +14,7 @@ class Entry(BaseModel):
   twitter_ids = ndb.IntegerProperty(repeated=True)
   body = ndb.TextProperty()
   tags = ndb.StringProperty(repeated=True)
+  views = ndb.IntegerProperty(default=0)
   is_published = ndb.BooleanProperty(default=False)
   is_deleted = ndb.BooleanProperty(default=False)
 
@@ -45,3 +46,10 @@ class Entry(BaseModel):
       ]
     )
     entry.put()
+
+  @classmethod
+  def increment_views(cls, entry_id):
+    entry = cls.get_entry(entry_id)
+    if entry is not None:
+      entry.views += 1
+      entry.put()
