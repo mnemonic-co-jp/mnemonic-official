@@ -23,8 +23,40 @@ body {
 	padding: 0;
 }
 
+a {
+	color: #999;
+	text-decoration: underline;
+}
+
+a:hover {
+	color: #ff9326;
+	text-decoration: none;
+}
+
 a img {
 	border: none;
+}
+
+table {
+	border: 1px solid #ddd;
+	border-collapse: collapse;
+	border-spacing: 0;
+	margin-bottom: 20px;
+	max-width: 100%;
+}
+
+table > thead > tr > th,
+table > tbody > tr > th,
+table > thead > tr > td,
+table > tbody > tr > td {
+	line-height: 1.4;
+	border: 1px solid #ddd;
+	vertical-align: top;
+	padding: 10px;
+}
+
+th {
+	text-align: left;
 }
 
 .clearfix {
