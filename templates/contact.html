@@ -1,0 +1,99 @@
+{% extends 'base.html' %}
+
+{% block title %}お問い合わせ｜{% endblock %}
+
+{% block head %}
+	<style>
+		.error {
+			color: #900;
+			line-height: 1.4;
+			background-color: #fcc;
+			margin-top: 40px;
+			padding: 10px;
+		}
+		dl {
+			margin-top: 40px;
+		}
+		dt {
+			float: left;
+			margin: 0 0 10px 0;
+			padding-top: 8px;
+			width: 8em;
+		}
+		dd {
+			margin: 0 0 10px 9em;
+		}
+		input {
+			font-size: 14px;
+			line-height: 1;
+			border: 1px solid #999;
+			border-radius: 3px;
+			padding: 5px;
+			width: 240px;
+		}
+		input[type="submit"] {
+			color: #000;
+			font-size: 16px;
+			background-color: #faeada;
+			padding: 10px 20px;
+			width: auto;
+		}
+		input[type="submit"]:hover {
+			color: #fff;
+			background-color: #ff9326;
+			cursor: pointer;
+		}
+		textarea {
+			font-size: 14px;
+			line-height: 1.3;
+			border: 1px solid #999;
+			border-radius: 3px;
+			padding: 5px;
+			width: 600px;
+			height: 10em;
+		}
+	</style>
+	<script>
+		$(function() {
+			$('form').submit(function() {
+				var errMesList = [];
+				if ($('input[name="name"]').val() == '') {
+					errMesList.push('お名前が入力されていません。');
+				}
+				if ($('input[name="phone"]').val() == '' && $('input[name="email"]').val() == '') {
+					errMesList.push('お電話番号、メールアドレスのどちらか一方は必ず入力してください。');
+				}
+				if ($('textarea').val() == '') {
+					errMesList.push('もちろん、メッセージも必須ですよ。');
+				}
+				if (errMesList.length) {
+					$('.error').html(errMesList.join('<br />')).slideDown();
+					return false;
+				}
+				return true;
+			});
+		});
+	</script>
+{% endblock %}
+
+{% block content %}
+	<section class="section">
+		<h2>思い立ったが吉日。まずは気軽にお問い合わせを</h2>
+		<p>「この案件、ニーモニックに依頼したいかも」と思ったら、以下のフォームよりお問い合わせください。質問は大歓迎ですが、セールスの類は間に合っておりますので、あらかじめご遠慮いただけると助かります。</p>
+		<div class="error" style="display: none;"></div>
+		<form action="/post" method="post">
+			<dl class="clearfix">
+				<dt>お名前</dt>
+				<dd><input type="text" name="name" value="" /></dd>
+				<dt>お電話番号</dt>
+				<dd><input type="text" name="phone" value="" /></dd>
+				<dt>メールアドレス</dt>
+				<dd><input type="text" name="email" value="" /></dd>
+				<dt>メッセージ</dt>
+				<dd><textarea name="message"></textarea></dd>
+				<dt>&nbsp;</dt>
+				<dd><input type="submit" value="送信" /></dd>
+			</dl>
+		</form>
+	</section>
+{% endblock %}
