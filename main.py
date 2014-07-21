@@ -27,7 +27,9 @@ jinja_environment.filters.update({
 class BaseHandler(webapp2.RequestHandler):
   def is_admin(self):
     user = users.get_current_user()
-    if user.nickname() == settings.ADMIN_USER:
+    if user == None:
+      self.redirect(users.create_login_url(self.request.uri))
+    if user != None and user.nickname() == settings.ADMIN_USER:
       return True
     return False
 
