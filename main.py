@@ -10,7 +10,9 @@ import logging
 import datetime
 import settings
 
+from google.appengine.api import users
 from google.appengine.api import mail
+
 from models import Entry
 
 jinja_environment = jinja2.Environment(
@@ -23,7 +25,11 @@ jinja_environment.filters.update({
 })
 
 class BaseHandler(webapp2.RequestHandler):
-  pass
+  def is_admin(self):
+    user = users.get_current_user()
+    if user.nickname() == settings.ADMIN_USER:
+      return True
+    return False
 
 class MainHandler(BaseHandler):
   def get(self):
@@ -40,6 +46,8 @@ class PageHandler(BaseHandler):
 
 class BlogIndexHandler(BaseHandler):
   def get(self):
+    if not self.is_admin():
+      return
     entries = Entry.get_entries().fetch()
     template = jinja_environment.get_template('blog_list.html')
     self.response.out.write(template.render({
@@ -48,6 +56,8 @@ class BlogIndexHandler(BaseHandler):
 
 class BlogEntryHandler(BaseHandler):
   def get(self, entry_id):
+    if not self.is_admin():
+      return
     entry = Entry.get_entry(entry_id)
     if entry is None:
       template = jinja_environment.get_template('404.html')
@@ -62,6 +72,8 @@ class BlogEntryHandler(BaseHandler):
 
 class BlogTestHandler(BaseHandler):
   def get(self):
+    if not self.is_admin():
+      return
     Entry.create_entry()
 
 class FormPostHandler(BaseHandler):
