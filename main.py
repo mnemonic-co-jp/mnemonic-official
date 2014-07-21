@@ -56,7 +56,8 @@ class BlogEntryHandler(BaseHandler):
       Entry.increment_views(entry_id)
       template = jinja_environment.get_template('blog_entry.html')
       self.response.out.write(template.render({
-        'entry': entry
+        'entry': entry,
+        'request_url': self.request.url
       }))
 
 class BlogTestHandler(BaseHandler):
