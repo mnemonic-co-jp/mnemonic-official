@@ -1,0 +1,80 @@
+{% extends 'base.html' %}
+
+{% block head %}
+	<link rel="stylesheet" href="https://ajax.googleapis.com/ajax/libs/jqueryui/1/themes/flick/jquery-ui.css">
+	<link rel="stylesheet" href="/css/jquery.tagit.css">
+	<style>
+		.ui-corner-all { border-radius: 4px; box-shadow: inset 0 1px 1px rgba(0, 0, 0, .075); }
+		ul.tagit li.tagit-choice-editable { margin-top: .4em; }
+		.ui-state-default, .ui-widget-content .ui-state-default { font-size: 12px; font-weight: normal; }
+	</style>
+	<script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.11.1/jquery-ui.min.js"></script>
+	<script src="/js/tag-it.js"></script>
+	<script>
+		var tagnames = {{ tagnames | default([]) }};
+		$(function() {
+			$('#myTags').tagit({
+				availableTags: tagnames
+			});
+		});
+	</script>
+{% endblock %}
+
+{% block content %}
+	<h1 class="page-header">{{ '新規投稿' if is_new else '投稿の編集' }}</h1>
+{% if alert %}
+	<div class="alert alert-{{ alert.type }} alert-dismissible" role="alert">
+		<button type="button" class="close" data-dismiss="alert"><span aria-hidden="true">&times;</span></button>
+		{{ alert.content }}
+	</div>
+{% endif %}
+	<form method="post" action="{{ get_request().url }}" role="form">
+		<input type="hidden" name="is_new" value="{{ '1' if is_new else '0' }}">
+		<div class="row">
+			<div class="col-sm-8">
+				<div class="form-group">
+					<input type="text" class="form-control" name="title" value="{{ entry.title }}" placeholder="タイトル">
+				</div>
+				<div class="form-group">
+					<textarea class="form-control" name="body" rows="24">{{ entry.body }}</textarea>
+				</div>
+			</div>
+			<div class="col-sm-4">
+				<div class="panel panel-default">
+					<div class="panel-heading">Twitter IDs</div>
+					<div class="panel-body">
+						<textarea class="form-control" name="twitter_ids" rows="5">{{ entry.twitter_ids | join('\n') }}</textarea>
+					</div>
+				</div>
+				<div class="panel panel-default">
+					<div class="panel-heading">タグ</div>
+					<div class="panel-body">
+						<ul id="myTags">
+						{% for tag in entry.tags %}
+							<li>{{ tag }}</li>
+						{% endfor %}
+						</ul>
+					</div>
+				</div>
+				<div class="form-inline">
+					<div class="form-group">
+						<div class="input-group">
+							<div class="input-group-addon">日付</div>
+							<input type="text" class="form-control" name="date" value="{{ entry.date | datetime2string }}">
+						</div>
+						<div class="input-group">
+							<select name="is_published" class="form-control">
+								<option value="1"{{ ' selected="selected"' if entry.is_published else '' }}>公開</option>
+								<option value="0"{{ ' selected="selected"' if not entry.is_published else '' }}>非公開</option>
+							</select>
+						</div>
+					</div>
+				</div>
+				<hr>
+				<button type="submit" class="btn btn-primary">更新</button>
+			</div>
+		</div>
+	</form>
+
+
+{% endblock %}

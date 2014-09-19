@@ -17,7 +17,7 @@
 		{% for entry in entries %}
 			<li>
 				<h3><a href="/blog/{{ entry.key.id() }}">{{ entry.title }}</a></h3>
-				<p class="meta"><span class="date"><span class="glyphicon glyphicon-time"></span> {{ entry.date | datetime2JDate }}</span><span class="separator">｜</span><span class="views"><span class="glyphicon glyphicon-eye-open"></span> {{ entry.views }}</span><span class="separator">｜</span><span class="tags"><span class="glyphicon glyphicon-tag"></span> {{ entry.tags | join('、') }}</span></p>
+				<p class="meta"><span class="date"><span class="glyphicon glyphicon-time"></span> {{ entry.date | datetime2jdate }}</span><span class="separator">｜</span><span class="views"><span class="glyphicon glyphicon-eye-open"></span> {{ entry.views }}</span><span class="separator">｜</span><span class="tags"><span class="glyphicon glyphicon-tag"></span> {{ entry.tags | join('、') }}</span></p>
 				<div class="thumb"><a href="/blog/{{ entry.key.id() }}"><img src="/images/noimage.png" alt="no image" /></a></div>
 			</li>
 		{% endfor %}

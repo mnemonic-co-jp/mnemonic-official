@@ -17,7 +17,7 @@ jinja_environment = jinja2.Environment(
   loader = jinja2.FileSystemLoader(os.path.join(os.path.dirname(__file__), 'templates'))
 )
 jinja_environment.filters.update({
-  'datetime2JDate': filters.datetime2JDate,
+  'datetime2jdate': filters.datetime2jdate,
   'mark2html': filters.mark2html,
   'nl2br': filters.nl2br
 })
@@ -40,7 +40,7 @@ class PageHandler(BaseHandler):
 
 class BlogIndexHandler(BaseHandler):
   def get(self):
-    entries = Entry.get_entries().fetch()
+    entries = Entry.get_entries()
     template = jinja_environment.get_template('blog_list.html')
     self.response.out.write(template.render({
       'entries': entries
@@ -108,4 +108,4 @@ app = webapp2.WSGIApplication([
   (r'/post', FormPostHandler)
 ], debug=True)
 app.error_handlers[404] = Error404Handler
-app.error_handlers[500] = Error500Handler
+# app.error_handlers[500] = Error500Handler

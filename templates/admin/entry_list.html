@@ -1,0 +1,52 @@
+{% extends 'base.html' %}
+
+{% block head %}
+	<style>
+		table.entryList tbody tr td.num { white-space: nowrap; width: 1em; }
+		table.entryList tbody tr td.title { width: 40% }
+		table.entryList tbody tr td.actions { text-align: right; white-space: nowrap; width: 5em; }
+		table.entryList tbody tr td.twitter { white-space: nowrap; width: 1em; }
+		table.entryList tbody tr td.tags { width: 30% }
+		table.entryList tbody tr td.status { white-space: nowrap; }
+		table.entryList tbody tr td.views { white-space: nowrap; width: 1em; }
+		table.entryList tbody tr td.date { white-space: nowrap; width: 3em; }
+	</style>
+	<script>
+		$(function() {
+			$('.delete').click(function() {
+				return confirm('投稿を削除してもよろしいですか？');
+			});
+		});
+	</script>
+{% endblock %}
+
+{% block content %}
+<h1 class="page-header">投稿一覧</h1>
+<table class="table table-striped entryList">
+	<thead>
+		<tr>
+			<th>#</th>
+			<th colspan="2">タイトル</th>
+			<th><span class="glyphicon glyphicon-cloud"></span></th>
+			<th>タグ</th>
+			<th>状態</th>
+			<th>PV</th>
+			<th>日時</th>
+		</tr>
+	</thead>
+	<tbody>
+	{% for entry in entries %}
+		<tr>
+			<td class="num">{{ loop.index }}</td>
+			<td class="title"><a href="/admin/entry/{{ entry.key.id() }}">{{ entry.title }}</a></td>
+			<td class="actions"><a href="/admin/entry/{{ entry.key.id() }}"><span class="glyphicon glyphicon-pencil"></span></a>&nbsp;&nbsp;<a href="/blog/{{ entry.key.id() }}"><span class="glyphicon glyphicon-link"></span></a>&nbsp;&nbsp;<a href="/admin/entry/{{ entry.key.id() }}/del" class="delete"><span class="glyphicon glyphicon-trash"></span></a></td>
+			<td class="twitter">{{ entry.twitter_ids | count }}</td>
+			<td class="tags">{{ entry.tags | join('、') }}</td>
+			<td class="status">{{ '公開' if entry.is_published else '非公開' }}</td>
+			<td class="views">{{ entry.views }}</td>
+			<td class="date">{{ entry.date | datetime2jdate }}</td>
+		</tr>
+	{% endfor %}
+	</tbody>
+</table>
+{% endblock %}

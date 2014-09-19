@@ -62,7 +62,7 @@
 {% block content %}
 	<header id="blog-header">
 		<h1>{{ entry.title }}</h1>
-		<p class="meta"><span class="date"><span class="glyphicon glyphicon-time"></span> {{ entry.date | datetime2JDate }}</span><span class="separator">｜</span><span class="views"><span class="glyphicon glyphicon-eye-open"></span> {{ entry.views }}</span></p>
+		<p class="meta"><span class="date"><span class="glyphicon glyphicon-time"></span> {{ entry.date | datetime2jdate }}</span><span class="separator">｜</span><span class="views"><span class="glyphicon glyphicon-eye-open"></span> {{ entry.views }}</span></p>
 	{% if entry.tags | length %}
 		<ul class="tags clearfix">
 			<li><span class="glyphicon glyphicon-tag"></span></li>

@@ -15,37 +15,57 @@ class Entry(BaseModel):
   body = ndb.TextProperty()
   tags = ndb.StringProperty(repeated=True)
   views = ndb.IntegerProperty(default=0)
-  is_published = ndb.BooleanProperty(default=False)
+  is_published = ndb.BooleanProperty(default=True)
   is_deleted = ndb.BooleanProperty(default=False)
 
   @classmethod
   def get_entries(cls):
-    return cls.query().order(-cls.date)
+    return cls.query().order(-cls.date).fetch()
 
   @classmethod
   def get_entry(cls, entry_id):
     return cls.get_by_id(int(entry_id))
 
   @classmethod
-  def create_entry(cls):
-    # stab
-    entry = cls(
-      title='hogehoge',
-      date=datetime.datetime.now(),
-      twitter_ids=[
-        480238014119956480,
-        480238687272202240,
-        480239039262363648,
-        480239438878892032
-      ],
-      body=u'あああああ/nいいいいい',
-      tags=[
-        u'ほげほげ',
-        u'ふがふが',
-        u'ほげほげ'
-      ]
-    )
-    entry.put()
+  def update_entry(cls, entry_id, params, is_new=False):
+    if is_new:
+      entry = cls(
+        title='',
+        date=datetime.datetime.now(),
+        twitter_ids=[],
+        body='',
+        tags=[],
+        is_published=True
+      )
+    else:
+      entry = cls.get_by_id(int(entry_id))
+    for key, value in params.items():
+      if key == 'title':
+        entry.title = value
+      if key == 'date':
+        entry.date = value
+      if key == 'twitter_ids':
+        entry.twitter_ids = value
+      if key == 'body':
+        entry.body = value
+      if key == 'tags':
+        entry.tags = value
+      if key == 'is_published':
+        entry.is_published = value
+    try:
+      entry.put()
+      Tag.update_tags(entry.tags)
+      return entry
+    except:
+      return None
+
+  @classmethod
+  def delete_entry(cls, entry_id):
+    try:
+      ndb.Key(Entry, int(entry_id)).delete()
+      return True
+    except:
+      return False
 
   @classmethod
   def increment_views(cls, entry_id):
@@ -53,3 +73,32 @@ class Entry(BaseModel):
     if entry is not None:
       entry.views += 1
       entry.put()
+
+class Tag(BaseModel):
+  name = ndb.StringProperty()
+  count = ndb.IntegerProperty(default=0)
+
+  @classmethod
+  def get_tags(cls):
+    return cls.query().fetch()
+
+  @classmethod
+  def get_tagnames(cls):
+    tags = cls.query().fetch()
+    tagnames = []
+    for t in tags:
+      tagnames.append(t.name)
+    return tagnames
+
+  @classmethod
+  def update_tags(cls, tag_list):
+    tags = cls.query().fetch()
+    tagnames = []
+    for t in tags:
+      tagnames.append(t.name)
+    temp = []
+    for tagname in tag_list:
+      if tagname not in tagnames and tagname not in temp:
+        tag = cls(name=tagname, count=1)
+        tag.put()
+        temp.append(tagname)
