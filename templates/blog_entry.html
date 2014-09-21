@@ -34,9 +34,10 @@
 					}
 				}
 				if (operator != 0) {
+					var offset = $('.slidebox iframe').eq(currentTweet + (operator == 1 ? -1 : -2)).outerHeight();
 					currentTweet += operator;
 					$('#tweet').find('.slidebox').animate({
-						marginTop: (operator == 1 ? '-' : '+') + '=222px'
+						marginTop: (operator == 1 ? '-=' : '+=') + String(offset + 10) + 'px'
 					}, function() {
 						$('#tweet').find('.pageinfo').text('tweet ' + currentTweet + ' of ' + tweetLength);
 					});
