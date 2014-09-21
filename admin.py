@@ -62,7 +62,7 @@ class EntryListHandler(BaseHandler):
   def get(self):
     if not self.is_admin():
       return
-    entries = Entry.get_entries()
+    entries = Entry.get_all_entries()
     template = jinja_environment.get_template('entry_list.html')
     self.response.out.write(template.render({
       'entries': entries

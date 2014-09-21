@@ -20,7 +20,11 @@ class Entry(BaseModel):
 
   @classmethod
   def get_entries(cls):
-    return cls.query().order(-cls.date).fetch()
+    return cls.query(cls.is_published == True, cls.is_deleted == False).order(-cls.date).fetch()
+
+  @classmethod
+  def get_all_entries(cls):
+    return cls.query(cls.is_deleted == False).order(-cls.date).fetch()
 
   @classmethod
   def get_entry(cls, entry_id):
