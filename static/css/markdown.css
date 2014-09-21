@@ -1,0 +1,23 @@
+@charset "UTF-8";
+
+.markdown pre {
+	display: block;
+	font-size: 13px;
+	line-height: 1.5;
+	word-break: break-all;
+	word-wrap: break-word;
+	background-color: #f8f8f8;
+	border: 1px solid #ddd;
+	border-radius: 3px;
+	margin: 20px 0;
+	padding: 15px;
+	overflow: auto;
+}
+
+.markdown blockquote {
+	color: #666;
+	font-size: 14px;
+	border-left: 4px solid #ddd;
+	margin: 20px 0;
+	padding: 0 15px;
+}

@@ -4,6 +4,7 @@
 
 {% block head %}
 	<link rel="stylesheet" href="/css/blog.css" />
+	<link rel="stylesheet" href="/css/markdown.css" />
 	<script async src="//platform.twitter.com/widgets.js" charset="utf-8"></script>
 	<script>
 		$(function() {
@@ -87,7 +88,7 @@
 		</div>
 	</div>
 {% endif %}
-	<section class="section markdown-body">
+	<section class="section markdown">
 		{{ entry.body | mark2html }}
 	</section>
 	<section class="section comments">
