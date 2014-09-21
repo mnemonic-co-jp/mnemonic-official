@@ -61,8 +61,10 @@ class Entry(BaseModel):
 
   @classmethod
   def delete_entry(cls, entry_id):
+    entry = cls.get_by_id(int(entry_id))
+    entry.is_deleted = True
     try:
-      ndb.Key(Entry, int(entry_id)).delete()
+      entry.put()
       return True
     except:
       return False
