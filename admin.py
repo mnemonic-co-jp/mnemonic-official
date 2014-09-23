@@ -28,14 +28,6 @@ jinja_environment.globals.update({
 })
 
 class BaseHandler(webapp2.RequestHandler):
-  def is_admin(self):
-    user = users.get_current_user()
-    if user is None:
-      self.redirect(users.create_login_url(self.request.uri))
-    if user is not None and user.nickname() == settings.ADMIN_USER:
-      return True
-    return False
-
   def request2params(self, request):
     try:
       date = datetime.datetime.strptime(request.get('date'), "%Y/%m/%d %H:%M:%S")
@@ -53,15 +45,11 @@ class BaseHandler(webapp2.RequestHandler):
 
 class MainHandler(BaseHandler):
   def get(self):
-    if not self.is_admin():
-      return
     template = jinja_environment.get_template('index.html')
     self.response.out.write(template.render())
 
 class EntryListHandler(BaseHandler):
   def get(self):
-    if not self.is_admin():
-      return
     entries = Entry.get_all_entries()
     template = jinja_environment.get_template('entry_list.html')
     self.response.out.write(template.render({
@@ -70,8 +58,6 @@ class EntryListHandler(BaseHandler):
 
 class EditEntryHandler(BaseHandler):
   def get(self, entry_id):
-    if not self.is_admin():
-      return
     entry = Entry.get_entry(entry_id)
     if entry is None:
       return
@@ -84,8 +70,6 @@ class EditEntryHandler(BaseHandler):
     }))
 
   def post(self, entry_id):
-    if not self.is_admin():
-      return
     entry = Entry.update_entry(entry_id, self.request2params(self.request))
     if entry is None:
       entry = Entry.get_entry(entry_id)
@@ -96,7 +80,7 @@ class EditEntryHandler(BaseHandler):
     else:
       alert = {
         'type': 'info',
-        'content': u'変更内容を保存しました。'
+        'content': u'変更内容を保存しました（<a href="/blog/%s">記事ページを表示</a>）。' % entry.key.id()
       }
     template = jinja_environment.get_template('entry_edit.html')
     self.response.out.write(template.render({
@@ -108,8 +92,6 @@ class EditEntryHandler(BaseHandler):
 
 class CreateEntryHandler(BaseHandler):
   def get(self):
-    if not self.is_admin():
-      return
     entry = {
       'date': datetime.datetime.now(),
       'is_published': True
@@ -123,8 +105,6 @@ class CreateEntryHandler(BaseHandler):
     }))
 
   def post(self):
-    if not self.is_admin():
-      return
     entry = Entry.update_entry(None, self.request2params(self.request), True)
     if entry is None:
       is_new = True
@@ -137,7 +117,7 @@ class CreateEntryHandler(BaseHandler):
       is_new = False
       alert = {
         'type': 'info',
-        'content': u'新しい投稿を保存しました。'
+        'content': u'新しい投稿を保存しました（<a href="/blog/%s">記事ページを表示</a>）。' % entry.key.id()
       }
     template = jinja_environment.get_template('entry_edit.html')
     self.response.out.write(template.render({
@@ -149,33 +129,15 @@ class CreateEntryHandler(BaseHandler):
 
 class DeleteEntryHandler(BaseHandler):
   def get(self, entry_id):
-    if not self.is_admin():
-      return
     if not Entry.delete_entry(entry_id):
       pass # 削除失敗時の処理が必要？
     time.sleep(0.1)
     self.redirect(self.request.referer)
-
-class ApiGetTagListHandler(BaseHandler):
-  def get(self):
-    tags = Tag.get_tags()
-    tag_list = []
-    for tag in tags:
-      tag_list.append({
-        'name': tag.name,
-        'count': tag.count
-      })
-    result = {
-      'tags': tag_list
-    }
-    self.response.headers['Content-Type'] = 'application/javascript charset=utf-8'
-    self.response.out.write(json.dumps(result).decode('utf_8'))
 
 app = webapp2.WSGIApplication([
   (r'/admin/?', MainHandler),
   (r'/admin/entry/?', EntryListHandler),
   (r'/admin/entry/(\d+)/?', EditEntryHandler),
   (r'/admin/entry/(\d+)/del/?', DeleteEntryHandler),
-  (r'/admin/entry/new/?', CreateEntryHandler),
-  (r'/admin/api/tags', ApiGetTagListHandler)
+  (r'/admin/entry/new/?', CreateEntryHandler)
 ], debug=True)
