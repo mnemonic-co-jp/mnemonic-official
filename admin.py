@@ -53,7 +53,8 @@ class EntryListHandler(BaseHandler):
     entries = Entry.get_all_entries()
     template = jinja_environment.get_template('entry_list.html')
     self.response.out.write(template.render({
-      'entries': entries
+      'entries': entries,
+      'status': self.request.get('status', None)
     }))
 
 class EditEntryHandler(BaseHandler):
@@ -63,32 +64,21 @@ class EditEntryHandler(BaseHandler):
       return
     template = jinja_environment.get_template('entry_edit.html')
     self.response.out.write(template.render({
-      'is_new': False,
+      'is_new': not not self.request.get('is_new', None),
       'entry': entry,
       'tagnames': json.dumps(Tag.get_tagnames(), ensure_ascii=False),
-      'alert': None
+      'status': self.request.get('status', None)
     }))
 
   def post(self, entry_id):
     entry = Entry.update_entry(entry_id, self.request2params(self.request))
     if entry is None:
       entry = Entry.get_entry(entry_id)
-      alert = {
-        'type': 'danger',
-        'content': u'変更できませんでした。'
-      }
+      self.redirect('/admin/entry/%d?status=fail' % entry.key.id())
     else:
-      alert = {
-        'type': 'info',
-        'content': u'変更内容を保存しました（<a href="/blog/%s">記事ページを表示</a>）。' % entry.key.id()
-      }
-    template = jinja_environment.get_template('entry_edit.html')
-    self.response.out.write(template.render({
-      'is_new': False,
-      'entry': entry,
-      'tagnames': json.dumps(Tag.get_tagnames(), ensure_ascii=False),
-      'alert': alert
-    }))
+      time.sleep(0.1)
+      self.redirect('/admin/entry/%d?status=done' % entry.key.id())
+
 
 class CreateEntryHandler(BaseHandler):
   def get(self):
@@ -101,38 +91,24 @@ class CreateEntryHandler(BaseHandler):
       'is_new': True,
       'entry': entry,
       'tagnames': json.dumps(Tag.get_tagnames(), ensure_ascii=False),
-      'alert': None
+      'status': self.request.get('status', None)
     }))
 
   def post(self):
     entry = Entry.update_entry(None, self.request2params(self.request), True)
     if entry is None:
-      is_new = True
-      entry = {}
-      alert = {
-        'type': 'danger',
-        'content': u'新しい投稿を保存できませんでした。'
-      }
+      self.redirect('/admin/entry/new?status=fail')
     else:
-      is_new = False
-      alert = {
-        'type': 'info',
-        'content': u'新しい投稿を保存しました（<a href="/blog/%s">記事ページを表示</a>）。' % entry.key.id()
-      }
-    template = jinja_environment.get_template('entry_edit.html')
-    self.response.out.write(template.render({
-      'is_new': is_new,
-      'entry': entry,
-      'tagnames': json.dumps(Tag.get_tagnames(), ensure_ascii=False),
-      'alert': alert
-    }))
+      time.sleep(0.1)
+      self.redirect('/admin/entry/%d?status=done&is_new=true' % entry.key.id())
 
 class DeleteEntryHandler(BaseHandler):
   def get(self, entry_id):
+    referer_path = self.request.referer.split('?')[0]
     if not Entry.delete_entry(entry_id):
-      pass # 削除失敗時の処理が必要？
+      self.redirect('%s?status=del_fail' % referer_path)
     time.sleep(0.1)
-    self.redirect(self.request.referer)
+    self.redirect('%s?status=del_done' % referer_path)
 
 app = webapp2.WSGIApplication([
   (r'/admin/?', MainHandler),

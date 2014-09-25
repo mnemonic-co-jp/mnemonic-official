@@ -22,13 +22,17 @@
 
 {% block content %}
 	<h1 class="page-header">{{ '新規投稿' if is_new else '投稿の編集' }}</h1>
-{% if alert %}
-	<div class="alert alert-{{ alert.type }} alert-dismissible" role="alert">
+{% if status %}
+	<div class="alert{% if status == 'done' %} alert-info{% elif status == 'fail' %} alert-danger{% endif %} alert-dismissible" role="alert">
 		<button type="button" class="close" data-dismiss="alert"><span aria-hidden="true">&times;</span></button>
-		{{ alert.content }}
+	{% if status == 'done' %}
+		{{ '新しい投稿' if is_new else '投稿' }}を保存しました（<a href="/blog/{{ entry.key.id() }}">記事ページを表示</a>）。
+	{% elif status == 'fail' %}
+		保存できませんでした。
+	{% endif %}
 	</div>
 {% endif %}
-	<form method="post" action="{{ get_request().url }}" role="form">
+	<form method="post" action="/admin/entry/{{ 'new' if is_new else entry.key.id() }}" role="form">
 		<input type="hidden" name="is_new" value="{{ '1' if is_new else '0' }}">
 		<div class="row">
 			<div class="col-sm-8">
