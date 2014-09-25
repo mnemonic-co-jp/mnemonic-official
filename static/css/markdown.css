@@ -1,5 +1,14 @@
 @charset "UTF-8";
 
+.markdown code {
+	color: #600;
+	font-size: 13px;
+	background-color: rgba(190, 190, 190, .2);
+	border: 1px solid #ccc;
+	border-radius: 3px;
+	padding: 3px 5px;
+}
+
 .markdown pre {
 	display: block;
 	font-size: 13px;
