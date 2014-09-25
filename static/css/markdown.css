@@ -1,7 +1,6 @@
 @charset "UTF-8";
 
 .markdown code {
-	color: #600;
 	font-size: 13px;
 	background-color: rgba(190, 190, 190, .2);
 	border: 1px solid #ccc;
@@ -15,12 +14,18 @@
 	line-height: 1.5;
 	word-break: break-all;
 	word-wrap: break-word;
-	background-color: #f8f8f8;
+	background-color: rgba(190, 190, 190, .2);
 	border: 1px solid #ddd;
 	border-radius: 3px;
 	margin: 20px 0;
 	padding: 15px;
 	overflow: auto;
+}
+.markdown pre code {
+	background-color: transparent;
+	border: none;
+	border-radius: none;
+	padding: 0;
 }
 
 .markdown blockquote {
