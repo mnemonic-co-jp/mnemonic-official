@@ -28,7 +28,9 @@ class BaseHandler(webapp2.RequestHandler):
 class MainHandler(BaseHandler):
   def get(self):
     template = jinja_environment.get_template('index.html')
-    self.response.out.write(template.render())
+    self.response.out.write(template.render({
+      'recent_entries': Entry.get_entries(num=5)
+    }))
 
 class PageHandler(BaseHandler):
   def get(self, name):
@@ -40,10 +42,9 @@ class PageHandler(BaseHandler):
 
 class BlogIndexHandler(BaseHandler):
   def get(self):
-    entries = Entry.get_entries()
     template = jinja_environment.get_template('blog_list.html')
     self.response.out.write(template.render({
-      'entries': entries
+      'entries': Entry.get_entries()
     }))
 
 class BlogEntryHandler(BaseHandler):

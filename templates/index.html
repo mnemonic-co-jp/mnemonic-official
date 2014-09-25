@@ -3,6 +3,7 @@
 {% block head %}
 	<style>
 		#container {
+			position: relative;
 			background-image: url("/images/bg_main.jpg");
 		}
 		#main .body {
@@ -16,11 +17,46 @@
 			filter: dropshadow(color=white, offx=0, offy=1);
 			margin: 0 0 .6em 0;
 		}
+		#main .recentEntries {
+			position: absolute;
+			left: 50%;
+			bottom: 100px;
+			background-color: rgba(255, 255, 255, .5);
+			border: 1px solid #999;
+			margin-left: -310px;
+			padding: 20px;
+		}
+		#main .recentEntries h4 {
+			margin-top: 0;
+		}
+		#main .recentEntries dl {
+			margin: 0;
+		}
+		#main .recentEntries dl dt {
+			float: left;
+			text-align: right;
+			color: #666;
+			margin-bottom: 10px;
+			width: 8em;
+		}
+		#main .recentEntries dl dd {
+			margin: 0 0 10px 9em;
+		}
+		#main .recentEntries dl dd a {
+			color: #000;
+		}
 	</style>
 {% endblock %}
 
 {% block content %}
 	<p><strong>少しづつ機能追加しています。</strong></p>
-	<br><br>
-	<p><em>2014/09/21</em> &mdash;「Blog」を公開しました。まずは現時点から過去に遡って投稿する予定です。</p>
+	<div class="recentEntries">
+		<h4>最近の Blog 記事</h4>
+		<dl>
+		{% for entry in recent_entries %}
+			<dt>{{ entry.date | datetime2jdate }}</dt>
+			<dd><a href="/blog/{{ entry.key.id() }}">{{ entry.title }}</a></dd>
+		{% endfor %}
+		</dl>
+	</div>
 {% endblock %}

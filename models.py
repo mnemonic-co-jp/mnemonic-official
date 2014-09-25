@@ -19,8 +19,12 @@ class Entry(BaseModel):
   is_deleted = ndb.BooleanProperty(default=False)
 
   @classmethod
-  def get_entries(cls):
-    return cls.query(cls.is_published == True, cls.is_deleted == False).order(-cls.date).fetch()
+  def get_entries(cls, num=None, offset=0):
+    query = cls.query(cls.is_published == True, cls.is_deleted == False).order(-cls.date)
+    if num is None:
+      return query.fetch()
+    else:
+      return query.fetch(num, offset=offset)
 
   @classmethod
   def get_all_entries(cls):
