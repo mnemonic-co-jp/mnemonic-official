@@ -1,0 +1,23 @@
+{% extends 'base.html' %}
+
+{% block head %}
+	<style>
+		table.tagList { width: auto; }
+		table.tagList tbody tr td.name { white-space: nowrap; width: 20em; }
+		table.tagList tbody tr td.count { text-align: right; white-space: nowrap; width: 1em; }
+	</style>
+{% endblock %}
+
+{% block content %}
+	<h1 class="page-header">タグ一覧</h1>
+	<table class="table table-striped tagList">
+		<tbody>
+		{% for tag in tags %}
+			<tr>
+				<td class="name">{{ tag.name }}</td>
+				<td class="count">{{ tag.count }}</td>
+			</tr>
+		{% endfor %}
+		</tbody>
+	</table>
+{% endblock %}

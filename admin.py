@@ -109,10 +109,20 @@ class DeleteEntryHandler(BaseHandler):
     time.sleep(0.1)
     self.redirect('%s?status=del_done' % referer_path)
 
+class TagListHandler(BaseHandler):
+  def get(self):
+    tags = Tag.get_tags_in_decreasing_order()
+    template = jinja_environment.get_template('tag_list.html')
+    self.response.out.write(template.render({
+      'tags': tags,
+      'status': self.request.get('status', None)
+    }))
+
 app = webapp2.WSGIApplication([
   (r'/admin/?', MainHandler),
   (r'/admin/entry/?', EntryListHandler),
   (r'/admin/entry/(\d+)/?', EditEntryHandler),
   (r'/admin/entry/(\d+)/del/?', DeleteEntryHandler),
-  (r'/admin/entry/new/?', CreateEntryHandler)
+  (r'/admin/entry/new/?', CreateEntryHandler),
+  (r'/admin/tag/?', TagListHandler)
 ], debug=True)

@@ -76,7 +76,7 @@ class Entry(BaseModel):
     try:
       entry.put()
       time.sleep(0.1)
-      Tag.update_tags(entry.tags)
+      Tag.update_tags(None)
       return True
     except:
       return False
@@ -98,6 +98,10 @@ class Tag(BaseModel):
     return cls.query().order(cls.name_lower).fetch()
 
   @classmethod
+  def get_tags_in_decreasing_order(cls):
+    return cls.query().order(-cls.count).fetch()
+
+  @classmethod
   def get_tagnames(cls):
     tags = cls.get_tags()
     tagnames = []
@@ -107,14 +111,15 @@ class Tag(BaseModel):
 
   @classmethod
   def update_tags(cls, tag_list):
-    tags = cls.get_tags()
-    tagnames = []
-    for t in tags:
-      tagnames.append(t.name)
-    for tagname in tag_list:
-      if tagname not in tagnames:
-        tag = cls(name=tagname)
-        tag.put()
+    if tag_list is not None:
+      tags = cls.get_tags()
+      tagnames = []
+      for t in tags:
+        tagnames.append(t.name)
+      for tagname in tag_list:
+        if tagname not in tagnames:
+          tag = cls(name=tagname)
+          tag.put()
     entries = Entry.get_entries()
     tag_count_dict = {}
     for entry in entries:
