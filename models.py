@@ -3,6 +3,7 @@
 
 from google.appengine.ext import ndb
 import datetime
+import time
 
 class BaseModel(ndb.Model):
   created_at = ndb.DateTimeProperty(auto_now_add=True)
@@ -57,11 +58,12 @@ class Entry(BaseModel):
       if key == 'body':
         entry.body = value
       if key == 'tags':
-        entry.tags = value
+        entry.tags = sorted(list(set(value)), key=unicode.lower)
       if key == 'is_published':
         entry.is_published = value
     try:
       entry.put()
+      time.sleep(0.1)
       Tag.update_tags(entry.tags)
       return entry
     except:
@@ -73,6 +75,8 @@ class Entry(BaseModel):
     entry.is_deleted = True
     try:
       entry.put()
+      time.sleep(0.1)
+      Tag.update_tags(entry.tags)
       return True
     except:
       return False
@@ -86,15 +90,16 @@ class Entry(BaseModel):
 
 class Tag(BaseModel):
   name = ndb.StringProperty()
+  name_lower = ndb.ComputedProperty(lambda self: self.name.lower())
   count = ndb.IntegerProperty(default=0)
 
   @classmethod
   def get_tags(cls):
-    return cls.query().fetch()
+    return cls.query().order(cls.name_lower).fetch()
 
   @classmethod
   def get_tagnames(cls):
-    tags = cls.query().fetch()
+    tags = cls.get_tags()
     tagnames = []
     for t in tags:
       tagnames.append(t.name)
@@ -102,13 +107,29 @@ class Tag(BaseModel):
 
   @classmethod
   def update_tags(cls, tag_list):
-    tags = cls.query().fetch()
+    tags = cls.get_tags()
     tagnames = []
     for t in tags:
       tagnames.append(t.name)
-    temp = []
     for tagname in tag_list:
-      if tagname not in tagnames and tagname not in temp:
-        tag = cls(name=tagname, count=1)
+      if tagname not in tagnames:
+        tag = cls(name=tagname)
         tag.put()
-        temp.append(tagname)
+    entries = Entry.get_entries()
+    tag_count_dict = {}
+    for entry in entries:
+      for tagname in entry.tags:
+        if tag_count_dict.has_key(tagname):
+          tag_count_dict[tagname] += 1
+        else:
+          tag_count_dict[tagname] = 1
+    for key, value in tag_count_dict.items():
+      tag = cls.query(cls.name == key).fetch()[0]
+      tag.count = value
+      tag.put()
+    time.sleep(0.1)
+    tags = cls.get_tags()
+    for tag in tags:
+      if tag.name not in tag_count_dict:
+        tag.count = 0
+        tag.put()
