@@ -22,7 +22,7 @@
 			<div class="navbar-collapse collapse">
 				<ul class="nav navbar-nav navbar-right">
 					<li><a href="/">サイトを表示</a></li>
-					<li><a href="{{ get_request().url }}"><span class="glyphicon glyphicon-refresh"></span></a></li>
+					<li><a href="{{ get_request().url.split('?')[0] }}"><span class="glyphicon glyphicon-refresh"></span></a></li>
 				</ul>
 			</div>
 		</div>
