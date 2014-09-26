@@ -8,7 +8,6 @@ import json
 import datetime
 import time
 import logging
-import settings
 import filters
 import utilities
 
