@@ -32,7 +32,7 @@
 	{% endif %}
 	</div>
 {% endif %}
-	<form method="post" action="/admin/entry/{{ 'new' if is_new else entry.key.id() }}" role="form">
+	<form method="post" action="/admin/entry/{{ entry.key.id() if entry.key else 'new' }}" role="form">
 		<input type="hidden" name="is_new" value="{{ '1' if is_new else '0' }}">
 		<div class="row">
 			<div class="col-sm-8">
