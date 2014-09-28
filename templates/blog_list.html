@@ -9,10 +9,10 @@
 			padding: 0;
 		}
 		ul.entry-list li {
-			position: relative;
 			list-style: none;
+			border-left: 10px solid #fdf5ef;
 			margin: 25px 0;
-			padding: 0 0 0 80px;
+			padding: 0 0 0 20px;
 			min-height: 60px;
 		}
 		ul.entry-list li h3 {
@@ -28,21 +28,12 @@
 		ul.entry-list li p.meta {
 			color: #999;
 			font-size: 12px;
-			margin: 0;
+			margin: 0 !important;
 			padding: 0;
 		}
-			ul.entry-list li p.meta .separator {
-				color: #eee;
-				padding: 0 10px;
-			}
-		ul.entry-list li .thumb {
-			position: absolute;
-			left: 0;
-			top: 0;
-		}
-		ul.entry-list li .thumb img {
-			width: 60px;
-			height: 60px;
+		ul.entry-list li p.meta .separator {
+			color: #eee;
+			padding: 0 10px;
 		}
 	</style>
 {% endblock %}
@@ -60,7 +51,6 @@
 			<li>
 				<h3><a href="/blog/{{ entry.key.id() }}">{{ entry.title }}</a></h3>
 				<p class="meta"><span class="date"><span class="glyphicon glyphicon-time"></span> {{ entry.date | datetime2jdate }}</span><span class="separator">｜</span><span class="views"><span class="glyphicon glyphicon-eye-open"></span> {{ entry.views }}</span><span class="separator">｜</span><span class="tags"><span class="glyphicon glyphicon-tag"></span> {{ entry.tags | join('、') }}</span></p>
-				<div class="thumb"><a href="/blog/{{ entry.key.id() }}"><img src="/images/noimage.png" alt="no image" /></a></div>
 			</li>
 		{% endfor %}
 		</ul>
