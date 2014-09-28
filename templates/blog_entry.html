@@ -3,8 +3,91 @@
 {% block title %}ブログ記事: {{ title }}｜{% endblock %}
 
 {% block head %}
-	<link rel="stylesheet" href="/css/blog.css" />
 	<link rel="stylesheet" href="/css/markdown.css" />
+	<style>
+		#blog-header {
+			margin: 60px 0 30px 0;
+		}
+		#blog-header h1 {
+			color: #000;
+			font-size: 28px;
+			line-height: 1.4;
+			font-weight: normal;
+			text-shadow: 0 2px 1px #fff;
+			margin: -3px 0 20px 0;
+			padding: 0;
+		}
+		#blog-header p.meta {
+			font-size: 13px;
+			margin: 0 0 10px 0;
+			padding: 0;
+		}
+		#blog-header p.meta .separator {
+			color: #ccc;
+			padding: 0 10px;
+		}
+		#blog-header ul.tags {
+			margin: 0 0 0 -2px;
+			padding: 0;
+		}
+		#blog-header ul.tags li {
+			display: inline-block;
+			float: left;
+			font-size: 13px;
+			line-height: 1.6;
+			list-style: none;
+			margin: 2px;
+		}
+		#blog-header ul.tags li a {
+			display: block;
+			color: #ff9326;
+			font-size: 11px;
+			line-height: 1;
+			text-decoration: none;
+			background-color: #fdf5ef;
+			border: 1px solid #ff9326;
+			border-radius: 3px;
+			padding: 3px 5px;
+		}
+		#blog-header ul.tags li a:hover {
+			background-color: #fff;
+		}
+
+		#tweet p.tweetnav {
+			color: #999;
+			margin: 0 0 10px 0;
+			padding: 0;
+		}
+		#tweet p.tweetnav .pagenate {
+			font-size: 20px;
+			padding-left: 20px;
+		}
+		#tweet p.tweetnav .pagenate:hover {
+			cursor: pointer;
+		}
+		#tweet p.tweetnav .pagenate.disabled {
+			color: #ddd;
+		}
+		#tweet p.tweetnav .pagenate.disabled:hover {
+			cursor: default;
+		}
+		#tweet p.tweetnav .pageinfo {
+			font-size: 13px;
+			padding-left: 30px;
+		}
+		#tweet .slidearea {
+			width: 880px;
+			height: 230px;
+			overflow: hidden;
+		}
+		#tweet .slidearea .slidebox {
+
+		}
+
+		.comments {
+			margin-top: 120px !important;
+		}
+	</style>
 	<script async src="//platform.twitter.com/widgets.js" charset="utf-8"></script>
 	<script>
 		$(function() {

@@ -3,7 +3,48 @@
 {% block title %}ブログ記事一覧｜{% endblock %}
 
 {% block head %}
-	<link rel="stylesheet" href="/css/blog.css" />
+	<style>
+		ul.entry-list {
+			margin: 0;
+			padding: 0;
+		}
+		ul.entry-list li {
+			position: relative;
+			list-style: none;
+			margin: 25px 0;
+			padding: 0 0 0 80px;
+			min-height: 60px;
+		}
+		ul.entry-list li h3 {
+			font-size: 20px;
+			font-weight: normal;
+			margin: 0 0 8px 0;
+			padding: 6px 0 0 0;
+		}
+		ul.entry-list li h3 a {
+			color: #000;
+			text-decoration: none;
+		}
+		ul.entry-list li p.meta {
+			color: #999;
+			font-size: 12px;
+			margin: 0;
+			padding: 0;
+		}
+			ul.entry-list li p.meta .separator {
+				color: #eee;
+				padding: 0 10px;
+			}
+		ul.entry-list li .thumb {
+			position: absolute;
+			left: 0;
+			top: 0;
+		}
+		ul.entry-list li .thumb img {
+			width: 60px;
+			height: 60px;
+		}
+	</style>
 {% endblock %}
 
 {% block content %}
