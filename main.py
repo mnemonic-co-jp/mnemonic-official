@@ -18,6 +18,7 @@ jinja_environment = jinja2.Environment(
 )
 jinja_environment.filters.update({
   'datetime2jdate': filters.datetime2jdate,
+  'datetimeBySpec': filters.datetimeBySpec,
   'mark2html': filters.mark2html,
   'nl2br': filters.nl2br
 })

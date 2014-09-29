@@ -9,11 +9,40 @@
 			padding: 0;
 		}
 		ul.entry-list li {
+			position: relative;
 			list-style: none;
-			border-left: 10px solid #fdf5ef;
 			margin: 25px 0;
-			padding: 0 0 0 20px;
+			padding: 0 0 0 85px;
 			min-height: 60px;
+		}
+		ul.entry-list li dl.calendar {
+			position: absolute;
+			left: 0;
+			top: 0;
+			margin: 0;
+			padding: 0;
+			width: 60px;
+		}
+		ul.entry-list li dl.calendar dt {
+			text-align: center;
+			color: #fff;
+			font-size: 12px;
+			line-height: 1;
+			font-weight: bold;
+			text-shadow: 0 -1px 0 #999;
+			background-color: #ff9326;
+			margin: 0;
+			padding: 3px 0;
+		}
+		ul.entry-list li dl.calendar dd {
+			text-align: center;
+			color: #000;
+			font-size: 32px;
+			line-height: 1;
+			font-weight: bold;
+			border: 1px solid #666;
+			margin: 1px 0 0 0;
+			padding: 3px 0;
 		}
 		ul.entry-list li h3 {
 			font-size: 20px;
@@ -49,6 +78,10 @@
 		<ul class="entry-list">
 		{% for entry in entries %}
 			<li>
+				<dl class="calendar">
+					<dt>{{ entry.date | datetimeBySpec('%b') }}</dt>
+					<dd>{{ entry.date | datetimeBySpec('%d') }}</dd>
+				</dl>
 				<h3><a href="/blog/{{ entry.key.id() }}">{{ entry.title }}</a></h3>
 				<p class="meta"><span class="date"><span class="glyphicon glyphicon-time"></span> {{ entry.date | datetime2jdate }}</span><span class="separator">｜</span><span class="views"><span class="glyphicon glyphicon-eye-open"></span> {{ entry.views }}</span><span class="separator">｜</span><span class="tags"><span class="glyphicon glyphicon-tag"></span> {{ entry.tags | join('、') }}</span></p>
 			</li>
