@@ -6,11 +6,14 @@ import markdown2
 
 from utilities import utc2jst
 
-def datetime2jdate(dt):
+def datetime2jdate(dt, full=False):
   if dt is None:
     return ''
   dt = utc2jst(dt)
-  return u'%s年%s月%s日' % (dt.year, dt.month, dt.day)
+  return_string = u'{0}年{1}月{2}日'.format(dt.year, dt.month, dt.day)
+  if full:
+    return return_string + ' ' + dt.strftime('%H:%M')
+  return return_string
 
 def datetime2string(dt):
   if dt is None:

@@ -83,7 +83,7 @@
 					<dd>{{ entry.date | datetimeBySpec('%d') }}</dd>
 				</dl>
 				<h3><a href="/blog/{{ entry.key.id() }}">{{ entry.title }}</a></h3>
-				<p class="meta"><span class="date"><span class="glyphicon glyphicon-time"></span> {{ entry.date | datetime2jdate }}</span><span class="separator">｜</span><span class="views"><span class="glyphicon glyphicon-eye-open"></span> {{ entry.views }}</span><span class="separator">｜</span><span class="tags"><span class="glyphicon glyphicon-tag"></span> {{ entry.tags | join('、') }}</span></p>
+				<p class="meta"><span class="date"><span class="glyphicon glyphicon-time"></span> {{ entry.date | datetime2jdate(True) }}</span><span class="separator">｜</span><span class="views"><span class="glyphicon glyphicon-eye-open"></span> {{ entry.views }}</span><span class="separator">｜</span><span class="tags"><span class="glyphicon glyphicon-tag"></span> {{ entry.tags | join('、') }}</span></p>
 			</li>
 		{% endfor %}
 		</ul>
