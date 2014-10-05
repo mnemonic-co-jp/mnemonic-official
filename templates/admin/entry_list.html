@@ -49,7 +49,7 @@
 			<tr>
 				<td class="num">{{ loop.index }}</td>
 				<td class="title"><a href="/admin/entry/{{ entry.key.id() }}">{{ entry.title }}</a></td>
-				<td class="actions"><a href="/admin/entry/{{ entry.key.id() }}"><span class="glyphicon glyphicon-pencil"></span></a>&nbsp;&nbsp;<a href="/blog/{{ entry.key.id() }}"><span class="glyphicon glyphicon-link"></span></a>&nbsp;&nbsp;<a href="/admin/entry/{{ entry.key.id() }}/del" class="delete"><span class="glyphicon glyphicon-trash"></span></a></td>
+				<td class="actions"><a href="/admin/entry/{{ entry.key.id() }}"><span class="glyphicon glyphicon-wrench"></span></a>&nbsp;&nbsp;<a href="/blog/{{ entry.key.id() }}"><span class="glyphicon glyphicon-link"></span></a>&nbsp;&nbsp;<a href="/admin/entry/{{ entry.key.id() }}/del" class="delete"><span class="glyphicon glyphicon-trash"></span></a></td>
 				<td class="twitter">{{ entry.twitter_ids | count }}</td>
 				<td class="tags">{{ entry.tags | join('、') }}</td>
 				<td class="status">{{ '公開' if entry.is_published else '非公開' }}</td>
