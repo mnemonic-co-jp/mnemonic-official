@@ -74,27 +74,22 @@ class FormPostHandler(BaseHandler):
     self.response.out.write(template.render())
 
   def post(self):
+    subject_template = jinja_environment.get_template('email/inquiry_subject.txt')
+    subject = subject_template.render({
+      'name': self.request.get('name')
+    })
+    body_template = jinja_environment.get_template('email/inquiry_body.txt')
+    body = body_template.render({
+      'name': self.request.get('name'),
+      'phone': self.request.get('phone'),
+      'email': self.request.get('email'),
+      'message': self.request.get('message')
+    })
     mail.send_mail(
       sender=settings.SENDER_ADDRESS,
       to=settings.RECIPIENT_ADDRESS,
-      subject='【Mnemonic】%sさんからのお問い合わせ' % self.request.get('name').encode('utf-8'),
-      body="""
-Mnemonicウェブサイトに以下の問い合わせがありました。
-
-氏名：%s
-電話番号：%s
-メールアドレス：%s
-
-内容：
-%s
-
-以上です。
-""" % (
-        self.request.get('name').encode('utf-8'),
-        self.request.get('phone').encode('utf-8'),
-        self.request.get('email').encode('utf-8'),
-        self.request.get('message').encode('utf-8')
-      )
+      subject=subject,
+      body=body
     )
     self.redirect('/page/sent')
 
