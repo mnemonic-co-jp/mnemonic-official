@@ -28,6 +28,10 @@ class Entry(BaseModel):
       return query.fetch(num, offset=offset)
 
   @classmethod
+  def get_entry_keys(cls):
+    return cls.query(cls.is_published == True, cls.is_deleted == False).order(cls.date).fetch(keys_only=True)
+
+  @classmethod
   def get_all_entries(cls):
     return cls.query(cls.is_deleted == False).order(-cls.date).fetch()
 

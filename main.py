@@ -55,10 +55,16 @@ class BlogEntryHandler(BaseHandler):
       template = jinja_environment.get_template('404.html')
       self.response.out.write(template.render())
     else:
+      entry_keys = Entry.get_entry_keys()
+      index = entry_keys.index(entry.key)
+      previous_entry_key = entry_keys[index - 1] if index > 0 else None
+      next_entry_key = entry_keys[index + 1] if index < len(entry_keys) - 1 else None
       Entry.increment_views(entry_id)
       template = jinja_environment.get_template('blog_entry.html')
       self.response.out.write(template.render({
         'entry': entry,
+        'previous': previous_entry_key,
+        'next': next_entry_key,
         'request_url': self.request.url
       }))
 

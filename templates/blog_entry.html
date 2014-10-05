@@ -84,6 +84,10 @@
 
 		}
 
+		.pagination {
+			margin-top: 30px;
+		}
+
 		.comments {
 			margin-top: 120px !important;
 		}
@@ -182,6 +186,16 @@
 {% endif %}
 	<section class="section markdown">
 		{{ entry.body | mark2html }}
+	</section>
+	<section class="section pagination">
+		<ul class="pager">
+		{% if previous %}
+			<li class="left">&laquo; <a href="/blog/{{ previous.id() }}">古い記事</a></li>
+		{% endif %}
+		{% if next %}
+			<li class="right"><a href="/blog/{{ next.id() }}">新しい記事</a> &raquo;</li>
+		{% endif %}
+		</ul>
 	</section>
 	<section class="section comments">
 		<div class="fb-comments" data-href="{{ request_url }}" data-numposts="5" data-colorscheme="light" data-width="860"></div>

@@ -216,3 +216,22 @@ th {
 		width: 1100px;
 	}
 
+ul.pager {
+	list-style: none;
+	padding: 0;
+	width: 100%;
+}
+ul.pager:after {
+	content: " ";
+	display: block;
+}
+	ul.pager li {
+		display: inline;
+	}
+		ul.pager li.left {
+			float: left;
+		}
+		ul.pager li.right {
+			float: right;
+		}
+
