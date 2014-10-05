@@ -100,6 +100,7 @@
 					maxWidth: '100%',
 					width: '860px'
 				});
+				adjustBoxHeight(currentTweet - 1);
 			}, 100);
 
 			$('#tweet').find('.pagenate').click(function() {
@@ -123,6 +124,7 @@
 					$('#tweet').find('.slidebox').animate({
 						marginTop: (operator == 1 ? '-=' : '+=') + String(offset + 10) + 'px'
 					}, function() {
+						adjustBoxHeight(currentTweet - 1);
 						$('#tweet').find('.pageinfo').text('tweet ' + currentTweet + ' of ' + tweetLength);
 					});
 					if (currentTweet == tweetLength) {
@@ -133,6 +135,13 @@
 				}
 			});
 		});
+
+		function adjustBoxHeight(index) {
+			var boxHeight = $('.slidebox iframe').eq(index).outerHeight();
+			$('.slidearea').css({
+				height: String(boxHeight + 25) + 'px'
+			});
+		}
 
 		(function(d, s, id) {
 			var js, fjs = d.getElementsByTagName(s)[0];
