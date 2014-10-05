@@ -110,5 +110,8 @@ app = webapp2.WSGIApplication([
   (r'/blog/(\d+)/?', BlogEntryHandler),
   (r'/post', FormPostHandler)
 ], debug=True)
+
 app.error_handlers[404] = Error404Handler
-# app.error_handlers[500] = Error500Handler
+host = os.environ.get('HTTP_HOST', '')
+if host != 'localhost:8084':
+  app.error_handlers[500] = Error500Handler
