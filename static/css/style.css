@@ -183,6 +183,9 @@ th {
 				#main .nav ul li a:hover {
 					color: #ff9326;
 				}
+		#main .nav .ad-left-bottom {
+			margin-top: 80px;
+		}
 	#main .body {
 		float: right;
 		width: 860px;
@@ -234,4 +237,3 @@ ul.pager:after {
 		ul.pager li.right {
 			float: right;
 		}
-
