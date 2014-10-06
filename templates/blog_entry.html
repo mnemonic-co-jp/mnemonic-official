@@ -1,6 +1,10 @@
 {% extends 'base.html' %}
 
-{% block title %}ブログ記事: {{ title }}｜{% endblock %}
+{% block description %}ブログ記事“{{ entry.title }}”のページです。{% endblock %}
+{% block keywords %},ブログ,{{ ','.join(entry.tags) }}{% endblock %}
+{% block og_title %}ブログ記事: {{ entry.title }}｜{% endblock %}
+{% block og_description %}ブログ記事“{{ entry.title }}”のページです。{% endblock %}
+{% block title %}ブログ記事: {{ entry.title }}｜{% endblock %}
 
 {% block head %}
 	<link rel="stylesheet" href="/css/markdown.css" />

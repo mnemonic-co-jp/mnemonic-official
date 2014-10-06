@@ -4,9 +4,11 @@
 	<meta charset="UTF-8" />
 	<meta http-equiv="X-UA-Compatible" content="IE=edge">
 	<meta name="viewport" content="width=device-width, initial-scale=1">
-	<meta property="og:title" content="ニモニク - 株式会社ニーモニック" />
+	<meta name="description" content="株式会社ニーモニックのオフィシャルサイト。{% block description %}{% endblock %}">
+	<meta name="keywords" content="Mnemonic,ニーモニック,ニモニク,システム開発,エンジニア{% block keywords %}{% endblock %}">
+	<meta property="og:title" content="{% block og_title %}{% endblock %}ニモニク - 株式会社ニーモニック" />
 	<meta property="og:image" content="http://www.mnemonic.co.jp/images/ogimage.png" />
-	<meta property="og:description" content="株式会社ニーモニックのオフィシャルサイトです。" />
+	<meta property="og:description" content="株式会社ニーモニックのオフィシャルサイト。{% block og_description %}{% endblock %}" />
 	<title>{% block title %}{% endblock %}ニモニク - 株式会社ニーモニック</title>
 	<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Montserrat+Alternates" />
 	<link rel="stylesheet" href="/css/style.css" />
