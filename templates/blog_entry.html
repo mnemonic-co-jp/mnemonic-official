@@ -194,10 +194,10 @@
 	<section class="section pagination">
 		<ul class="pager">
 		{% if previous %}
-			<li class="left">&laquo; <a href="/blog/{{ previous.id() }}">古い記事</a></li>
+			<li class="left">&laquo; <a href="/blog/{{ previous.key.id() }}">{{ previous.title }}</a></li>
 		{% endif %}
 		{% if next %}
-			<li class="right"><a href="/blog/{{ next.id() }}">新しい記事</a> &raquo;</li>
+			<li class="right"><a href="/blog/{{ next.key.id() }}">{{ next.title }}</a> &raquo;</li>
 		{% endif %}
 		</ul>
 	</section>
