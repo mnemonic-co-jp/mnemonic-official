@@ -221,7 +221,7 @@ th {
 
 ul.pager {
 	list-style: none;
-	padding: 0;
+	padding: 20px 0;
 	width: 100%;
 }
 ul.pager:after {
@@ -230,6 +230,7 @@ ul.pager:after {
 }
 	ul.pager li {
 		display: inline;
+		margin-bottom: 15px;
 	}
 		ul.pager li.left {
 			float: left;
