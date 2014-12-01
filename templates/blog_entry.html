@@ -84,8 +84,19 @@
 			height: 230px;
 			overflow: hidden;
 		}
-		#tweet .slidearea .slidebox {
+		#tweet .slidearea .slidebox {}
 
+		.pagebody {
+			position: relative;
+			padding-right: 200px;
+			min-height: 640px;
+			height: auto !important;
+			height: 640px;
+		}
+		.pagebody .ad {
+			position: absolute;
+			right: 0;
+			top: 0;
 		}
 
 		.pagination {
@@ -151,6 +162,23 @@
 			});
 		}
 
+		$(window).scroll(function() {
+			var top = 0;
+			var pagetop = $(this).scrollTop();
+			var offset = $('.pagebody').offset();
+			var pagebodyheight = $('.pagebody').height();
+			if (pagetop > offset.top - 64) {
+				if (pagetop < pagebodyheight + offset.top - 664) {
+					var top = String(pagetop - offset.top + 64) + 'px';
+				} else {
+					var top = String(pagebodyheight - 600) + 'px';
+				}
+			}
+			$('.ad').css({
+				top: top
+			});
+		});
+
 		(function(d, s, id) {
 			var js, fjs = d.getElementsByTagName(s)[0];
 			if (d.getElementById(id)) return;
@@ -188,8 +216,13 @@
 		</div>
 	</div>
 {% endif %}
-	<section class="section markdown">
-		{{ entry.body | mark2html }}
+	<section class="section pagebody">
+		<div class="markdown">
+			{{ entry.body | mark2html }}
+		</div>
+		<div class="ad">
+			<iframe src="http://rcm-fe.amazon-adsystem.com/e/cm?t=somin-22&o=9&p=14&l=bn1&mode=books-jp&browse=466298&fc1=000000&lt1=_blank&lc1=3366FF&bg1=FFFFFF&f=ifr" marginwidth="0" marginheight="0" width="160" height="600" border="0" frameborder="0" style="border:none;" scrolling="no"></iframe>
+		</div>
 	</section>
 	<section class="section pagination">
 		<ul class="pager">
