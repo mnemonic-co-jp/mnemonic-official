@@ -68,6 +68,14 @@
 			color: #eee;
 			padding: 0 10px;
 		}
+	{% if not is_pc %}
+		ul.entry-list li {
+			padding: 0;
+		}
+		ul.entry-list li dl.calendar {
+			display: none;
+		}
+	{% endif %}
 	</style>
 {% endblock %}
 

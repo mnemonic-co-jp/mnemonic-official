@@ -9,6 +9,8 @@ import logging
 import datetime
 import settings
 
+from user_agents import parse
+
 from google.appengine.api import mail
 
 from models import Entry
@@ -16,6 +18,9 @@ from models import Entry
 jinja_environment = jinja2.Environment(
   loader = jinja2.FileSystemLoader(os.path.join(os.path.dirname(__file__), 'templates'))
 )
+jinja_environment.globals.update({
+  'is_pc': parse(os.environ['HTTP_USER_AGENT']).is_pc
+})
 jinja_environment.filters.update({
   'datetime2jdate': filters.datetime2jdate,
   'datetimeBySpec': filters.datetimeBySpec,

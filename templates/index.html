@@ -1,6 +1,7 @@
 {% extends 'base.html' %}
 
 {% block head %}
+{% if is_pc %}
 	<style>
 		#container {
 			position: relative;
@@ -47,6 +48,37 @@
 			color: #000;
 		}
 	</style>
+{% else %}
+	<style>
+		#main .body {
+			padding-top: 57px;
+		}
+		#main .body p {
+			margin: 0 15px .6em 15px;
+		}
+		#main .recentEntries {
+			border: 1px solid #999;
+			margin: 20px 15px 0 15px;
+			padding: 20px;
+		}
+		#main .recentEntries h4 {
+			margin-top: 0;
+		}
+		#main .recentEntries dl {
+			margin: 0;
+		}
+		#main .recentEntries dl dt {
+			color: #666;
+			margin-bottom: 5px;
+		}
+		#main .recentEntries dl dd {
+			margin: 0 0 10px 0;
+		}
+		#main .recentEntries dl dd a {
+			color: #000;
+		}
+	</style>
+{% endif %}
 {% endblock %}
 
 {% block content %}

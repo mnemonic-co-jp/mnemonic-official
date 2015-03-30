@@ -15,7 +15,7 @@
 		#blog-header h1 {
 			color: #000;
 			font-size: 28px;
-			line-height: 1.4;
+			line-height: 1.2;
 			font-weight: normal;
 			text-shadow: 0 2px 1px #fff;
 			margin: -3px 0 20px 0;
@@ -106,6 +106,27 @@
 		.comments {
 			margin-top: 120px !important;
 		}
+	{% if not is_pc %}
+		#blog-header {
+			margin: 45px 15px 20px 15px;
+		}
+		#blog-header h1 {
+			font-size: 20px;
+			margin-bottom: 10px;
+		}
+		#tweet p.tweetnav {
+			margin: 0;
+		}
+		#tweet .slidearea {
+			width: auto;
+		}
+		.pagebody {
+			padding: 0;
+		}
+		.pagebody .ad {
+			display: none;
+		}
+	{% endif %}
 	</style>
 	<script async src="//platform.twitter.com/widgets.js" charset="utf-8"></script>
 	<script>

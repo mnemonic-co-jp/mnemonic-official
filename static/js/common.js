@@ -15,9 +15,6 @@ $(function() {
 	function toggleNaviPosition() {
 		if ($('body').scrollTop() > 150) {
 			$('#nav').hide();
-			if (!$('#altnav').html()) {
-				$('#altnav').html($('#nav ul').html());
-			}
 			$('#altnav').fadeIn('slow');
 		} else {
 			$('#nav').fadeIn('slow');

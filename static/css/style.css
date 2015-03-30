@@ -91,6 +91,7 @@ th {
 			top: 22px;
 		}
 			#subnav .subnav-inner ul.altnav {
+				display: none;
 				position: absolute;
 				left: 180px;
 				top: 13px;
