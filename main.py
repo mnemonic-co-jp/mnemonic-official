@@ -18,9 +18,6 @@ from models import Entry
 jinja_environment = jinja2.Environment(
   loader = jinja2.FileSystemLoader(os.path.join(os.path.dirname(__file__), 'templates'))
 )
-jinja_environment.globals.update({
-  'is_pc': parse(os.environ['HTTP_USER_AGENT']).is_pc
-})
 jinja_environment.filters.update({
   'datetime2jdate': filters.datetime2jdate,
   'datetimeBySpec': filters.datetimeBySpec,
@@ -29,7 +26,11 @@ jinja_environment.filters.update({
 })
 
 class BaseHandler(webapp2.RequestHandler):
-  pass
+    ua_string = os.environ['HTTP_USER_AGENT']
+    user_agent = parse(ua_string)
+    jinja_environment.globals.update({
+      'is_pc': user_agent.is_pc
+    })
 
 class MainHandler(BaseHandler):
   def get(self):
