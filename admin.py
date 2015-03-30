@@ -45,13 +45,13 @@ class BaseHandler(webapp2.RequestHandler):
 class MainHandler(BaseHandler):
   def get(self):
     template = jinja_environment.get_template('index.html')
-    self.response.out.write(template.render())
+    return self.response.out.write(template.render())
 
 class EntryListHandler(BaseHandler):
   def get(self):
     entries = Entry.get_all_entries()
     template = jinja_environment.get_template('entry_list.html')
-    self.response.out.write(template.render({
+    return self.response.out.write(template.render({
       'entries': entries,
       'status': self.request.get('status', None)
     }))
@@ -62,7 +62,7 @@ class EditEntryHandler(BaseHandler):
     if entry is None:
       return
     template = jinja_environment.get_template('entry_edit.html')
-    self.response.out.write(template.render({
+    return self.response.out.write(template.render({
       'is_new': not not self.request.get('is_new', None),
       'entry': entry,
       'tagnames': json.dumps(Tag.get_tagnames(), ensure_ascii=False),
@@ -73,10 +73,9 @@ class EditEntryHandler(BaseHandler):
     entry = Entry.update_entry(entry_id, self.request2params(self.request))
     if entry is None:
       entry = Entry.get_entry(entry_id)
-      self.redirect('/admin/entry/%d?status=fail' % entry.key.id())
-    else:
-      time.sleep(0.1)
-      self.redirect('/admin/entry/%d?status=done' % entry.key.id())
+      return self.redirect('/admin/entry/%d?status=fail' % entry.key.id())
+    time.sleep(0.1)
+    return self.redirect('/admin/entry/%d?status=done' % entry.key.id())
 
 
 class CreateEntryHandler(BaseHandler):
@@ -86,7 +85,7 @@ class CreateEntryHandler(BaseHandler):
       'is_published': True
     }
     template = jinja_environment.get_template('entry_edit.html')
-    self.response.out.write(template.render({
+    return self.response.out.write(template.render({
       'is_new': True,
       'entry': entry,
       'tagnames': json.dumps(Tag.get_tagnames(), ensure_ascii=False),
@@ -96,24 +95,23 @@ class CreateEntryHandler(BaseHandler):
   def post(self):
     entry = Entry.update_entry(None, self.request2params(self.request), True)
     if entry is None:
-      self.redirect('/admin/entry/new?status=fail')
-    else:
-      time.sleep(0.1)
-      self.redirect('/admin/entry/%d?status=done&is_new=true' % entry.key.id())
+      return self.redirect('/admin/entry/new?status=fail')
+    time.sleep(0.1)
+    return self.redirect('/admin/entry/%d?status=done&is_new=true' % entry.key.id())
 
 class DeleteEntryHandler(BaseHandler):
   def get(self, entry_id):
     referer_path = self.request.referer.split('?')[0]
     if not Entry.delete_entry(entry_id):
-      self.redirect('%s?status=del_fail' % referer_path)
+      return self.redirect('%s?status=del_fail' % referer_path)
     time.sleep(0.1)
-    self.redirect('%s?status=del_done' % referer_path)
+    return self.redirect('%s?status=del_done' % referer_path)
 
 class TagListHandler(BaseHandler):
   def get(self):
     tags = Tag.get_tags_in_decreasing_order()
     template = jinja_environment.get_template('tag_list.html')
-    self.response.out.write(template.render({
+    return self.response.out.write(template.render({
       'tags': tags,
       'status': self.request.get('status', None)
     }))

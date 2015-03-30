@@ -65,20 +65,19 @@ class BlogEntryHandler(BaseHandler):
       return self.response.out.write(template.render({
         'is_pc': self.is_pc()
       }))
-    else:
-      entries = Entry.get_entry_titles()
-      index = [e.key for e in entries].index(entry.key)
-      previous_entry = entries[index - 1] if index > 0 else None
-      next_entry = entries[index + 1] if index < len(entries) - 1 else None
-      Entry.increment_views(entry_id)
-      template = jinja_environment.get_template('blog_entry.html')
-      return self.response.out.write(template.render({
-        'is_pc': self.is_pc(),
-        'entry': entry,
-        'previous': previous_entry,
-        'next': next_entry,
-        'request_url': self.request.url
-      }))
+    entries = Entry.get_entry_titles()
+    index = [e.key for e in entries].index(entry.key)
+    previous_entry = entries[index - 1] if index > 0 else None
+    next_entry = entries[index + 1] if index < len(entries) - 1 else None
+    Entry.increment_views(entry_id)
+    template = jinja_environment.get_template('blog_entry.html')
+    return self.response.out.write(template.render({
+      'is_pc': self.is_pc(),
+      'entry': entry,
+      'previous': previous_entry,
+      'next': next_entry,
+      'request_url': self.request.url
+    }))
 
 class FormPostHandler(BaseHandler):
   def get(self):
@@ -105,7 +104,7 @@ class FormPostHandler(BaseHandler):
       subject=subject,
       body=body
     )
-    self.redirect('/page/sent')
+    return self.redirect('/page/sent')
 
 def Error404Handler(request, response, exception):
   logging.exception(exception)
