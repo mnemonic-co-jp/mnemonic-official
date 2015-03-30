@@ -26,16 +26,16 @@ jinja_environment.filters.update({
 })
 
 class BaseHandler(webapp2.RequestHandler):
+  def is_pc(self):
     ua_string = os.environ['HTTP_USER_AGENT']
     user_agent = parse(ua_string)
-    jinja_environment.globals.update({
-      'is_pc': user_agent.is_pc
-    })
+    return user_agent.is_pc
 
 class MainHandler(BaseHandler):
   def get(self):
     template = jinja_environment.get_template('index.html')
-    self.response.out.write(template.render({
+    return self.response.out.write(template.render({
+      'is_pc': self.is_pc(),
       'recent_entries': Entry.get_entries(num=5)
     }))
 
@@ -45,12 +45,15 @@ class PageHandler(BaseHandler):
       template = jinja_environment.get_template(name + '.html')
     except IOError:
       template = jinja_environment.get_template('404.html')
-    self.response.out.write(template.render())
+    return self.response.out.write(template.render({
+      'is_pc': self.is_pc()
+    }))
 
 class BlogIndexHandler(BaseHandler):
   def get(self):
     template = jinja_environment.get_template('blog_list.html')
-    self.response.out.write(template.render({
+    return self.response.out.write(template.render({
+      'is_pc': self.is_pc(),
       'entries': Entry.get_entries()
     }))
 
@@ -59,7 +62,9 @@ class BlogEntryHandler(BaseHandler):
     entry = Entry.get_entry(entry_id)
     if entry is None:
       template = jinja_environment.get_template('404.html')
-      self.response.out.write(template.render())
+      return self.response.out.write(template.render({
+        'is_pc': self.is_pc()
+      }))
     else:
       entries = Entry.get_entry_titles()
       index = [e.key for e in entries].index(entry.key)
@@ -67,7 +72,8 @@ class BlogEntryHandler(BaseHandler):
       next_entry = entries[index + 1] if index < len(entries) - 1 else None
       Entry.increment_views(entry_id)
       template = jinja_environment.get_template('blog_entry.html')
-      self.response.out.write(template.render({
+      return self.response.out.write(template.render({
+        'is_pc': self.is_pc(),
         'entry': entry,
         'previous': previous_entry,
         'next': next_entry,
@@ -77,7 +83,9 @@ class BlogEntryHandler(BaseHandler):
 class FormPostHandler(BaseHandler):
   def get(self):
     template = jinja_environment.get_template('404.html')
-    self.response.out.write(template.render())
+    return self.response.out.write(template.render({
+      'is_pc': self.is_pc()
+    }))
 
   def post(self):
     subject_template = jinja_environment.get_template('email/inquiry_subject.txt')
@@ -102,12 +110,16 @@ class FormPostHandler(BaseHandler):
 def Error404Handler(request, response, exception):
   logging.exception(exception)
   template = jinja_environment.get_template('404.html')
-  response.out.write(template.render())
+  return response.out.write(template.render({
+    'is_pc': self.is_pc()
+  }))
 
 def Error500Handler(request, response, exception):
   logging.exception(exception)
   template = jinja_environment.get_template('500.html')
-  response.out.write(template.render())
+  return response.out.write(template.render({
+    'is_pc': self.is_pc()
+  }))
 
 app = webapp2.WSGIApplication([
   (r'/', MainHandler),
