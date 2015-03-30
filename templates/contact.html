@@ -56,6 +56,22 @@
 			width: 600px;
 			height: 10em;
 		}
+	{% if not is_pc %}
+		dl {
+			width: 90%;
+		}
+		dt {
+			float: none;
+			margin: 0 0 5px 0;
+		}
+		dd {
+			margin: 0 0 8px 0;
+		}
+		input,
+		textarea {
+			width: 100%;
+		}
+	{% endif %}
 	</style>
 	<script>
 		$(function() {

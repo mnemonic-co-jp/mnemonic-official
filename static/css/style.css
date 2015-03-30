@@ -90,6 +90,9 @@ th {
 			left: 0;
 			top: 22px;
 		}
+		#subnav .subnav-inner .smalllogo {
+			display: none;
+		}
 			#subnav .subnav-inner ul.altnav {
 				display: none;
 				position: absolute;

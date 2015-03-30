@@ -32,6 +32,26 @@
 			font-size: 14px;
 			margin-bottom: 5px !important;
 		}
+	{% if not is_pc %}
+		table.companyProfile {
+			border: none;
+		}
+		table.companyProfile tr {
+			display: block;
+			margin-bottom: 15px;
+		}
+		table.companyProfile th,
+		table.companyProfile td {
+			display: list-item;
+			border: none;
+			list-style: none;
+			padding: 2px 0;
+		}
+		.withPortrait {
+			background-image: none;
+			padding-left: 0;
+		}
+	{% endif %}
 	</style>
 {% endblock %}
 
