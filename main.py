@@ -44,6 +44,7 @@ class PageHandler(BaseHandler):
     try:
       template = jinja_environment.get_template(name + '.html')
     except IOError:
+      self.response.set_status(404)
       template = jinja_environment.get_template('404.html')
     return self.response.out.write(template.render({}))
 
@@ -58,6 +59,7 @@ class BlogEntryHandler(BaseHandler):
   def get(self, entry_id):
     entry = Entry.get_entry(entry_id)
     if entry is None:
+      self.response.set_status(404)
       template = jinja_environment.get_template('404.html')
       return self.response.out.write(template.render({}))
     entries = Entry.get_entry_titles()
@@ -76,6 +78,7 @@ class BlogEntryHandler(BaseHandler):
 
 class FormPostHandler(BaseHandler):
   def get(self):
+    self.response.set_status(404)
     template = jinja_environment.get_template('404.html')
     return self.response.out.write(template.render({}))
 
@@ -101,11 +104,13 @@ class FormPostHandler(BaseHandler):
 
 def Error404Handler(request, response, exception):
   logging.exception(exception)
+  response.set_status(404)
   template = jinja_environment.get_template('404.html')
   return response.out.write(template.render({}))
 
 def Error500Handler(request, response, exception):
   logging.exception(exception)
+  response.set_status(500)
   template = jinja_environment.get_template('500.html')
   return response.out.write(template.render({}))
 
@@ -118,6 +123,5 @@ app = webapp2.WSGIApplication([
 ], debug=True)
 
 app.error_handlers[404] = Error404Handler
-host = os.environ.get('HTTP_HOST', '')
-if host != 'localhost:8084':
+if 'localhost' in os.environ.get('HTTP_HOST', ''):
   app.error_handlers[500] = Error500Handler
