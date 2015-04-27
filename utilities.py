@@ -1,7 +1,15 @@
 # coding: utf-8
 # Author: Somin Kobayashi
 
+import os
 import datetime
+
+from user_agents import parse
+
+def is_pc():
+  ua_string = os.environ['HTTP_USER_AGENT']
+  user_agent = parse(ua_string)
+  return user_agent.is_pc
 
 def utc2jst(dt):
   return dt.replace(tzinfo=UtcTzinfo()).astimezone(JstTzinfo())
