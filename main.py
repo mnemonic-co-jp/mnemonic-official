@@ -19,9 +19,6 @@ from utilities import is_pc
 jinja_environment = jinja2.Environment(
   loader = jinja2.FileSystemLoader(os.path.join(os.path.dirname(__file__), 'templates'))
 )
-jinja_environment.globals.update({
-  'is_pc': is_pc()
-})
 jinja_environment.filters.update({
   'datetime2jdate': filters.datetime2jdate,
   'datetimeBySpec': filters.datetimeBySpec,
@@ -36,6 +33,7 @@ class MainHandler(BaseHandler):
   def get(self):
     template = jinja_environment.get_template('index.html')
     return self.response.out.write(template.render({
+      'is_pc': is_pc(),
       'recent_entries': Entry.get_entries(num=5)
     }))
 
@@ -46,12 +44,15 @@ class PageHandler(BaseHandler):
     except IOError:
       self.response.set_status(404)
       template = jinja_environment.get_template('404.html')
-    return self.response.out.write(template.render({}))
+    return self.response.out.write(template.render({
+      'is_pc': is_pc()
+    }))
 
 class BlogIndexHandler(BaseHandler):
   def get(self):
     template = jinja_environment.get_template('blog_list.html')
     return self.response.out.write(template.render({
+      'is_pc': is_pc(),
       'entries': Entry.get_entries()
     }))
 
@@ -80,7 +81,9 @@ class FormPostHandler(BaseHandler):
   def get(self):
     self.response.set_status(404)
     template = jinja_environment.get_template('404.html')
-    return self.response.out.write(template.render({}))
+    return self.response.out.write(template.render({
+      'is_pc': is_pc()
+    }))
 
   def post(self):
     subject_template = jinja_environment.get_template('email/inquiry_subject.txt')
