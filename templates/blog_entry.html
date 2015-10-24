@@ -136,10 +136,6 @@
 			$('#tweet').find('.pagenate-prev').addClass('disabled');
 
 			setInterval(function() {
-				$('.twitter-tweet-rendered').css({
-					maxWidth: '100%',
-					width: '860px'
-				});
 				adjustBoxHeight(currentTweet - 1);
 			}, 100);
 
