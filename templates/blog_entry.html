@@ -57,35 +57,6 @@
 			background-color: #fff;
 		}
 
-		#tweet p.tweetnav {
-			color: #999;
-			margin: 0 0 10px 0;
-			padding: 0;
-		}
-		#tweet p.tweetnav .pagenate {
-			font-size: 20px;
-			padding-left: 20px;
-		}
-		#tweet p.tweetnav .pagenate:hover {
-			cursor: pointer;
-		}
-		#tweet p.tweetnav .pagenate.disabled {
-			color: #ddd;
-		}
-		#tweet p.tweetnav .pagenate.disabled:hover {
-			cursor: default;
-		}
-		#tweet p.tweetnav .pageinfo {
-			font-size: 13px;
-			padding-left: 30px;
-		}
-		#tweet .slidearea {
-			width: 880px;
-			height: 230px;
-			overflow: hidden;
-		}
-		#tweet .slidearea .slidebox {}
-
 		.pagebody {
 			position: relative;
 			padding-right: 200px;
@@ -93,10 +64,17 @@
 			height: auto !important;
 			height: 640px;
 		}
+		.pagebody .tweet {
+			margin-bottom: 60px;
+		}
 		.pagebody .ad {
 			position: absolute;
 			right: 0;
 			top: 0;
+		}
+
+		twitterwidget::shadow .EmbeddedTweet {
+			max-width: 100% !important;
 		}
 
 		.pagination {
@@ -130,55 +108,6 @@
 	</style>
 	<script async src="//platform.twitter.com/widgets.js" charset="utf-8"></script>
 	<script>
-		$(function() {
-			var currentTweet = 1;
-			var tweetLength = {{ entry.twitter_ids | length }};
-			$('#tweet').find('.pagenate-prev').addClass('disabled');
-
-			setInterval(function() {
-				adjustBoxHeight(currentTweet - 1);
-			}, 100);
-
-			$('#tweet').find('.pagenate').click(function() {
-				$next = $('#tweet').find('.pagenate-next');
-				$prev = $('#tweet').find('.pagenate-prev');
-				var operator = 0;
-				if ($(this).hasClass('pagenate-next')) {
-					if (currentTweet < tweetLength) {
-						operator = 1
-						$prev.removeClass('disabled');
-					}
-				} else {
-					if (currentTweet > 1) {
-						operator = -1
-						$next.removeClass('disabled');
-					}
-				}
-				if (operator != 0) {
-					var offset = $('.slidebox iframe').eq(currentTweet + (operator == 1 ? -1 : -2)).outerHeight();
-					currentTweet += operator;
-					$('#tweet').find('.slidebox').animate({
-						marginTop: (operator == 1 ? '-=' : '+=') + String(offset + 10) + 'px'
-					}, function() {
-						adjustBoxHeight(currentTweet - 1);
-						$('#tweet').find('.pageinfo').text('tweet ' + currentTweet + ' of ' + tweetLength);
-					});
-					if (currentTweet == tweetLength) {
-						$next.addClass('disabled');
-					} else if (currentTweet == 1) {
-						$prev.addClass('disabled');
-					}
-				}
-			});
-		});
-
-		function adjustBoxHeight(index) {
-			var boxHeight = $('.slidebox iframe').eq(index).outerHeight();
-			$('.slidearea').css({
-				height: String(boxHeight + 25) + 'px'
-			});
-		}
-
 		$(window).scroll(function() {
 			var top = 0;
 			var pagetop = $(this).scrollTop();
@@ -219,21 +148,14 @@
 		</ul>
 	{% endif %}
 	</header>
-{% if entry.twitter_ids | length %}
-	<div id="tweet">
-	{% if entry.twitter_ids | length > 1 %}
-		<p class="tweetnav"><span class="glyphicon glyphicon-chevron-up pagenate pagenate-next"></span><span class="glyphicon glyphicon-chevron-down pagenate pagenate-prev"></span><span class="pageinfo">tweet 1 of {{ entry.twitter_ids | length }}</span></p>
-	{% endif %}
-		<div class="slidearea">
-			<div class="slidebox">
-			{% for id in entry.twitter_ids %}
-				<blockquote class="twitter-tweet" lang="ja"><a href="https://twitter.com/mnemoniccojp/statuses/{{ id }}"></a></blockquote>
-			{% endfor %}
-			</div>
-		</div>
-	</div>
-{% endif %}
 	<section class="section pagebody">
+	{% if entry.twitter_ids | length %}
+		<div class="tweet">
+		{% for id in entry.twitter_ids %}
+			<blockquote class="twitter-tweet" lang="ja" width="100%"><a href="https://twitter.com/mnemoniccojp/statuses/{{ id }}"></a></blockquote>
+		{% endfor %}
+		</div>
+	{% endif %}
 		<div class="markdown">
 			{{ entry.body | mark2html }}
 		</div>
