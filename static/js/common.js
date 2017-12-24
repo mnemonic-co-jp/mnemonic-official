@@ -13,7 +13,7 @@ $(function() {
 	$(window).resize(resizeWindow);
 
 	function toggleNaviPosition() {
-		if ($('body').scrollTop() > 150) {
+		if ($('html, body').scrollTop() > 150) {
 			$('#nav').hide();
 			$('#altnav').fadeIn('slow');
 		} else {
