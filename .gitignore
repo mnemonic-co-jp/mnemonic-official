@@ -1,6 +1,5 @@
 *.pyc
+*.db
 
 *.sublime-workspace
 *.sublime-project
-
-main.pyc
