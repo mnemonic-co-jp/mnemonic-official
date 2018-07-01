@@ -109,20 +109,33 @@ def Error404Handler(request, response, exception):
   logging.exception(exception)
   response.set_status(404)
   template = jinja_environment.get_template('404.html')
-  return response.out.write(template.render({}))
+  return response.out.write(template.render({
+    'is_pc': is_pc()
+  }))
 
 def Error500Handler(request, response, exception):
   logging.exception(exception)
   response.set_status(500)
   template = jinja_environment.get_template('500.html')
-  return response.out.write(template.render({}))
+  return response.out.write(template.render({
+    'is_pc': is_pc()
+  }))
+
+class TestHandler(BaseHandler):
+  def get(self):
+    template = jinja_environment.get_template('test.html')
+    return self.response.out.write(template.render({
+      'is_pc': is_pc()
+    }))
 
 app = webapp2.WSGIApplication([
   (r'/', MainHandler),
   (r'/page/(\w+)/?', PageHandler),
   (r'/blog/?', BlogIndexHandler),
   (r'/blog/(\d+)/?', BlogEntryHandler),
-  (r'/post', FormPostHandler)
+  (r'/post', FormPostHandler),
+
+  (r'/test', TestHandler)
 ], debug=True)
 
 app.error_handlers[404] = Error404Handler
