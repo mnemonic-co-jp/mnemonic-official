@@ -121,21 +121,12 @@ def Error500Handler(request, response, exception):
     'is_pc': is_pc()
   }))
 
-class TestHandler(BaseHandler):
-  def get(self):
-    template = jinja_environment.get_template('test.html')
-    return self.response.out.write(template.render({
-      'is_pc': is_pc()
-    }))
-
 app = webapp2.WSGIApplication([
   (r'/', MainHandler),
   (r'/page/(\w+)/?', PageHandler),
   (r'/blog/?', BlogIndexHandler),
   (r'/blog/(\d+)/?', BlogEntryHandler),
-  (r'/post', FormPostHandler),
-
-  (r'/test', TestHandler)
+  (r'/post', FormPostHandler)
 ], debug=True)
 
 app.error_handlers[404] = Error404Handler
