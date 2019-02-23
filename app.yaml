@@ -9,6 +9,7 @@ handlers:
   static_files: static/\1/\2
   upload: static/.*
   expiration: "1d"
+  secure: always
 - url: /favicon\.ico
   static_files: favicon.ico
   upload: favicon\.ico
@@ -18,8 +19,10 @@ handlers:
 - url: /admin(/.*)?
   script: admin.app
   login: admin
+  secure: always
 - url: /.*
   script: main.app
+  secure: always
 
 libraries:
 - name: webapp2
