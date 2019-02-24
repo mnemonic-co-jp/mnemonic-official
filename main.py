@@ -42,7 +42,6 @@ class PageHandler(BaseHandler):
         try:
             template = jinja_environment.get_template(name + '.html')
         except IOError:
-            self.response.set_status(404)
             template = jinja_environment.get_template('404.html')
         return self.response.out.write(template.render({
             'is_pc': is_pc()
@@ -60,9 +59,10 @@ class BlogEntryHandler(BaseHandler):
     def get(self, entry_id):
         entry = Entry.get_entry(entry_id)
         if entry is None:
-            self.response.set_status(404)
             template = jinja_environment.get_template('404.html')
-            return self.response.out.write(template.render({}))
+            return self.response.out.write(template.render({
+                'is_pc': is_pc()
+            }))
         entries = Entry.get_entry_titles()
         index = [e.key for e in entries].index(entry.key)
         previous_entry = entries[index - 1] if index > 0 else None
@@ -78,13 +78,6 @@ class BlogEntryHandler(BaseHandler):
         }))
 
 class FormPostHandler(BaseHandler):
-    def get(self):
-        self.response.set_status(404)
-        template = jinja_environment.get_template('404.html')
-        return self.response.out.write(template.render({
-            'is_pc': is_pc()
-        }))
-
     def post(self):
         subject_template = jinja_environment.get_template('email/inquiry_subject.txt')
         subject = subject_template.render({
