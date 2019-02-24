@@ -106,8 +106,6 @@ class FormPostHandler(BaseHandler):
     return self.redirect('/page/sent')
 
 def Error404Handler(request, response, exception):
-  logging.exception(exception)
-  response.set_status(404)
   template = jinja_environment.get_template('404.html')
   return response.out.write(template.render({
     'is_pc': is_pc()
@@ -115,7 +113,6 @@ def Error404Handler(request, response, exception):
 
 def Error500Handler(request, response, exception):
   logging.exception(exception)
-  response.set_status(500)
   template = jinja_environment.get_template('500.html')
   return response.out.write(template.render({
     'is_pc': is_pc()
@@ -130,5 +127,5 @@ app = webapp2.WSGIApplication([
 ], debug=True)
 
 app.error_handlers[404] = Error404Handler
-if 'localhost' in os.environ.get('HTTP_HOST', ''):
+if 'localhost' not in os.environ.get('HTTP_HOST', ''):
   app.error_handlers[500] = Error500Handler
