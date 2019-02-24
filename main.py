@@ -17,115 +17,115 @@ from models import Entry
 from utilities import is_pc
 
 jinja_environment = jinja2.Environment(
-  loader = jinja2.FileSystemLoader(os.path.join(os.path.dirname(__file__), 'templates'))
+    loader = jinja2.FileSystemLoader(os.path.join(os.path.dirname(__file__), 'templates'))
 )
 jinja_environment.filters.update({
-  'datetime2jdate': filters.datetime2jdate,
-  'datetimeBySpec': filters.datetimeBySpec,
-  'mark2html': filters.mark2html,
-  'nl2br': filters.nl2br
+    'datetime2jdate': filters.datetime2jdate,
+    'datetimeBySpec': filters.datetimeBySpec,
+    'mark2html': filters.mark2html,
+    'nl2br': filters.nl2br
 })
 
 class BaseHandler(webapp2.RequestHandler):
-  pass
+    pass
 
 class MainHandler(BaseHandler):
-  def get(self):
-    template = jinja_environment.get_template('index.html')
-    return self.response.out.write(template.render({
-      'is_pc': is_pc(),
-      'recent_entries': Entry.get_entries(num=5)
-    }))
+    def get(self):
+        template = jinja_environment.get_template('index.html')
+        return self.response.out.write(template.render({
+            'is_pc': is_pc(),
+            'recent_entries': Entry.get_entries(num=5)
+        }))
 
 class PageHandler(BaseHandler):
-  def get(self, name):
-    try:
-      template = jinja_environment.get_template(name + '.html')
-    except IOError:
-      self.response.set_status(404)
-      template = jinja_environment.get_template('404.html')
-    return self.response.out.write(template.render({
-      'is_pc': is_pc()
-    }))
+    def get(self, name):
+        try:
+            template = jinja_environment.get_template(name + '.html')
+        except IOError:
+            self.response.set_status(404)
+            template = jinja_environment.get_template('404.html')
+        return self.response.out.write(template.render({
+            'is_pc': is_pc()
+        }))
 
 class BlogIndexHandler(BaseHandler):
-  def get(self):
-    template = jinja_environment.get_template('blog_list.html')
-    return self.response.out.write(template.render({
-      'is_pc': is_pc(),
-      'entries': Entry.get_entries()
-    }))
+    def get(self):
+        template = jinja_environment.get_template('blog_list.html')
+        return self.response.out.write(template.render({
+            'is_pc': is_pc(),
+            'entries': Entry.get_entries()
+        }))
 
 class BlogEntryHandler(BaseHandler):
-  def get(self, entry_id):
-    entry = Entry.get_entry(entry_id)
-    if entry is None:
-      self.response.set_status(404)
-      template = jinja_environment.get_template('404.html')
-      return self.response.out.write(template.render({}))
-    entries = Entry.get_entry_titles()
-    index = [e.key for e in entries].index(entry.key)
-    previous_entry = entries[index - 1] if index > 0 else None
-    next_entry = entries[index + 1] if index < len(entries) - 1 else None
-    Entry.increment_views(entry_id)
-    template = jinja_environment.get_template('blog_entry.html')
-    return self.response.out.write(template.render({
-      'is_pc': is_pc(),
-      'entry': entry,
-      'previous': previous_entry,
-      'next': next_entry,
-      'request_url': self.request.url
-    }))
+    def get(self, entry_id):
+        entry = Entry.get_entry(entry_id)
+        if entry is None:
+            self.response.set_status(404)
+            template = jinja_environment.get_template('404.html')
+            return self.response.out.write(template.render({}))
+        entries = Entry.get_entry_titles()
+        index = [e.key for e in entries].index(entry.key)
+        previous_entry = entries[index - 1] if index > 0 else None
+        next_entry = entries[index + 1] if index < len(entries) - 1 else None
+        Entry.increment_views(entry_id)
+        template = jinja_environment.get_template('blog_entry.html')
+        return self.response.out.write(template.render({
+            'is_pc': is_pc(),
+            'entry': entry,
+            'previous': previous_entry,
+            'next': next_entry,
+            'request_url': self.request.url
+        }))
 
 class FormPostHandler(BaseHandler):
-  def get(self):
-    self.response.set_status(404)
-    template = jinja_environment.get_template('404.html')
-    return self.response.out.write(template.render({
-      'is_pc': is_pc()
-    }))
+    def get(self):
+        self.response.set_status(404)
+        template = jinja_environment.get_template('404.html')
+        return self.response.out.write(template.render({
+            'is_pc': is_pc()
+        }))
 
-  def post(self):
-    subject_template = jinja_environment.get_template('email/inquiry_subject.txt')
-    subject = subject_template.render({
-      'name': self.request.get('name')
-    })
-    body_template = jinja_environment.get_template('email/inquiry_body.txt')
-    body = body_template.render({
-      'name': self.request.get('name'),
-      'phone': self.request.get('phone'),
-      'email': self.request.get('email'),
-      'message': self.request.get('message')
-    })
-    mail.send_mail(
-      sender=settings.SENDER_ADDRESS,
-      to=settings.RECIPIENT_ADDRESS,
-      subject=subject,
-      body=body
-    )
-    return self.redirect('/page/sent')
+    def post(self):
+        subject_template = jinja_environment.get_template('email/inquiry_subject.txt')
+        subject = subject_template.render({
+            'name': self.request.get('name')
+        })
+        body_template = jinja_environment.get_template('email/inquiry_body.txt')
+        body = body_template.render({
+            'name': self.request.get('name'),
+            'phone': self.request.get('phone'),
+            'email': self.request.get('email'),
+            'message': self.request.get('message')
+        })
+        mail.send_mail(
+            sender=settings.SENDER_ADDRESS,
+            to=settings.RECIPIENT_ADDRESS,
+            subject=subject,
+            body=body
+        )
+        return self.redirect('/page/sent')
 
 def Error404Handler(request, response, exception):
-  template = jinja_environment.get_template('404.html')
-  return response.out.write(template.render({
-    'is_pc': is_pc()
-  }))
+    template = jinja_environment.get_template('404.html')
+    return response.out.write(template.render({
+        'is_pc': is_pc()
+    }))
 
 def Error500Handler(request, response, exception):
-  logging.exception(exception)
-  template = jinja_environment.get_template('500.html')
-  return response.out.write(template.render({
-    'is_pc': is_pc()
-  }))
+    logging.exception(exception)
+    template = jinja_environment.get_template('500.html')
+    return response.out.write(template.render({
+        'is_pc': is_pc()
+    }))
 
 app = webapp2.WSGIApplication([
-  (r'/', MainHandler),
-  (r'/page/(\w+)/?', PageHandler),
-  (r'/blog/?', BlogIndexHandler),
-  (r'/blog/(\d+)/?', BlogEntryHandler),
-  (r'/post', FormPostHandler)
+    (r'/', MainHandler),
+    (r'/page/(\w+)/?', PageHandler),
+    (r'/blog/?', BlogIndexHandler),
+    (r'/blog/(\d+)/?', BlogEntryHandler),
+    (r'/post', FormPostHandler)
 ], debug=True)
 
 app.error_handlers[404] = Error404Handler
 if 'localhost' not in os.environ.get('HTTP_HOST', ''):
-  app.error_handlers[500] = Error500Handler
+    app.error_handlers[500] = Error500Handler
