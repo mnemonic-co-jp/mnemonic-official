@@ -7,7 +7,7 @@ import datetime
 from user_agents import parse
 
 def is_pc():
-    ua_string = os.environ.get('HTTP_USER_AGENT')
+    ua_string = os.environ.get('HTTP_USER_AGENT', '')
     user_agent = parse(ua_string)
     return user_agent.is_pc
 
